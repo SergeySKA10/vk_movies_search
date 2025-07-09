@@ -1,0 +1,13 @@
+.inputSearch {
+    padding: 5px 20px;
+    width: 700px;
+    height: 50px;
+    border: 2px solid $decor_color;
+    border-radius: 10px;
+    &:placeholder-shown {
+        color: $text_color;
+        font-size: 16px;
+        font-weight: 300;
+        font-style: italic;
+    }
+}

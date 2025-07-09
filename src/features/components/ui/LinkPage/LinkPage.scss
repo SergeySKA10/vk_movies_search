@@ -1,0 +1,13 @@
+.linkpage {
+    transition: all 0.3s;
+    font-size: 18px;
+    font-weight: 700;
+    color: $text_color;
+    &:hover {
+        color: $text_hover_color;
+    }
+}
+
+.activeLinkPage {
+    color: $text_active_color !important;
+}

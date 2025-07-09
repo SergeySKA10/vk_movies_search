@@ -1,0 +1,13 @@
+.header {
+    padding: 10px 30px;
+    width: 100%;
+    border-bottom: 1px solid $decor_color;
+    &__menu {
+        height: 40px;
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        gap: 20px;
+        list-style: none;
+    }
+}

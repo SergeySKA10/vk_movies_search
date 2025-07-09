@@ -1,0 +1,14 @@
+.promo {
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 70px;
+    &__header {
+        font-size: 80px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        color: $text_color;
+    }
+}
