@@ -25,20 +25,25 @@
         font-size: 20px;
         font-weight: 400;
         color: $text_color;
-        &::before {
+        & .arrow {
+            transition: all 0.3s;
+            position: absolute;
+            right: 10px;
+        }
+        & .arrow::before {
             content: '';
             position: absolute;
-            right: 20px;
+            right: 7px;
             display: block;
             height: 2px;
             width: 10px;
             background-color: rgb(0, 0, 0, 0.7);
             transform: rotate(45deg);
         }
-        &::after {
+        & .arrow::after {
             content: '';
             position: absolute;
-            right: 13px;
+            right: 0px;
             display: block;
             height: 2px;
             width: 10px;
@@ -64,4 +69,8 @@
 
 .active_filter {
     height: 150px;
+}
+
+.active_arrow {
+    transform: scaleY(-1);
 }
