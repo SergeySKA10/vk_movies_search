@@ -1,0 +1,67 @@
+.selectFilm {
+    transition: all 1s;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 30px;
+    border: none;
+    border: 1px solid $decor_color;
+    border-radius: 5px;
+    overflow: hidden;
+    cursor: pointer;
+    :hover {
+        color: $text_hover_color;
+    }
+    &__filter {
+        display: flex;
+        align-items: center;
+        position: relative;
+        padding: 3px 10px;
+        width: 100%;
+        border: 1px solid $decor_color;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+        font-size: 20px;
+        font-weight: 400;
+        color: $text_color;
+        &::before {
+            content: '';
+            position: absolute;
+            right: 20px;
+            display: block;
+            height: 2px;
+            width: 10px;
+            background-color: rgb(0, 0, 0, 0.7);
+            transform: rotate(45deg);
+        }
+        &::after {
+            content: '';
+            position: absolute;
+            right: 13px;
+            display: block;
+            height: 2px;
+            width: 10px;
+            background-color: rgb(0, 0, 0, 0.7);
+            transform: rotate(135deg);
+        }
+    }
+    &__ul {
+        overflow-y: scroll;
+        scrollbar-width: thin;
+        ::-webkit-scrollbar {
+            display: thin;
+        }
+    }
+    &__item {
+        padding: 3px 20px;
+        display: block;
+        font-size: 16px;
+        font-weight: 400;
+        color: $text_color;
+    }
+}
+
+.active_filter {
+    height: 150px;
+}

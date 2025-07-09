@@ -1,0 +1,11 @@
+.filterBlock {
+    width: 400px;
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid $decor_color;
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+}

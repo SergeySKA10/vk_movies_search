@@ -18,6 +18,10 @@ ul[role='list'] {
     padding-inline: 0;
 }
 
+ul {
+    padding-inline-start: 0px;
+    list-style-type: none;
+}
 h1,
 h2,
 h3,
@@ -37,4 +41,9 @@ img {
 
 :root {
     font-family: 'Roboto', sans-serif;
+    scrollbar-width: none;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
