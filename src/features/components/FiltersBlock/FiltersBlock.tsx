@@ -1,3 +1,5 @@
+'use client';
+
 import { MovieFilter } from '../ui/MovieFilter/MovieFilter';
 import './FiltersBlock.scss';
 
