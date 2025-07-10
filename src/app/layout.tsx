@@ -1,3 +1,5 @@
+import { Header } from '@/features/components/Header/Header';
+import { PopupModal } from '@/features/components/ui/PopupModal/PopupModal';
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import '@/style/globals.scss';
@@ -20,7 +22,11 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${robotoSans.variable}`}>{children}</body>
+            <body className={`${robotoSans.variable}`}>
+                <Header />
+                {children}
+                <PopupModal />
+            </body>
         </html>
     );
 }

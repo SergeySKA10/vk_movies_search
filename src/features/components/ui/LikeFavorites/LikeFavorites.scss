@@ -1,0 +1,35 @@
+.heart {
+    transition: all 0.3s;
+    position: absolute;
+    z-index: 10;
+    top: 40px;
+    right: 40px;
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    border-right: none;
+    border-top: none;
+    transform: rotate(-45deg);
+    cursor: pointer;
+    &:hover {
+        transform: rotate(-45deg) scale(1.2);
+    }
+    &_before,
+    &_after {
+        content: '';
+        position: absolute;
+        z-index: 10;
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+    }
+    &_before {
+        top: -10px;
+        left: 0;
+    }
+
+    &_after {
+        left: 10px;
+        top: 0;
+    }
+}

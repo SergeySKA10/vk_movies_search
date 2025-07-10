@@ -1,11 +1,13 @@
 import Image from 'next/image';
 import { RatingStars } from '../RatingStars/RatingStars';
+import { LikeFavorites } from '../LikeFavorites/LikeFavorites';
 import type { ICardMovieProps } from '@/shared/components/CardMovieShared/cardMovieShared';
 import './CardMovie.scss';
 
 export const CardMovie = ({ name, src, year, rating }: ICardMovieProps) => {
     return (
         <div className="cardMovie">
+            <LikeFavorites active={false} />
             <div className="cardMovie__poster">
                 <Image
                     src={src}
