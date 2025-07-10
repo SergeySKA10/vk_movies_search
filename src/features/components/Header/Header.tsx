@@ -7,13 +7,17 @@ export const Header = () => {
             <ul className="header__menu">
                 <li>
                     <LinkPage
-                        link="#"
+                        link="/"
                         text="Главная страница"
                         activeClass="activeLinkPage"
                     />
                 </li>
                 <li>
-                    <LinkPage link="#" text="Избранное" activeClass="" />
+                    <LinkPage
+                        link="/favorites"
+                        text="Избранное"
+                        activeClass=""
+                    />
                 </li>
             </ul>
         </header>

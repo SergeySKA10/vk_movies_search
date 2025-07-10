@@ -3,4 +3,5 @@ export interface ICardMovieProps {
     src: string;
     year: string;
     rating: string;
+    link: string;
 }

@@ -1,10 +1,10 @@
 .filmsBlock {
-    border-radius: 15px;
-    border: 1px solid $decor_color;
+    border-radius: 10px;
+    border: none;
     display: grid;
-    grid-template-columns: repeat(3, 385px);
-    grid-template-rows: repeat(3, 500px);
-    grid-auto-rows: 200px;
+    grid-template-rows: repeat(3, 450px);
+    grid-template-columns: repeat(4, 285px);
+    grid-auto-rows: 450px;
     gap: 20px;
     overflow: auto;
 }

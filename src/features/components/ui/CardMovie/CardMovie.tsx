@@ -1,16 +1,23 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { RatingStars } from '../RatingStars/RatingStars';
 import { LikeFavorites } from '../LikeFavorites/LikeFavorites';
 import type { ICardMovieProps } from '@/shared/components/CardMovieShared/cardMovieShared';
 import './CardMovie.scss';
 
-export const CardMovie = ({ name, src, year, rating }: ICardMovieProps) => {
+export const CardMovie = ({
+    name,
+    src,
+    year,
+    rating,
+    link,
+}: ICardMovieProps) => {
     return (
-        <div className="cardMovie">
+        <Link href={link} className="cardMovie">
             <LikeFavorites active={false} />
             <div className="cardMovie__poster">
                 <Image
-                    src={src}
+                    src={src ? src : '/poster_img/poster_not_found.jpg'}
                     alt={`poster: ${name}`}
                     width={100}
                     height={100}
@@ -24,6 +31,6 @@ export const CardMovie = ({ name, src, year, rating }: ICardMovieProps) => {
                     <p>Рейтинг: {rating}</p>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 };

@@ -25,7 +25,7 @@ export default function RootLayout({
             <body className={`${robotoSans.variable}`}>
                 <Header />
                 {children}
-                <PopupModal />
+                {/* <PopupModal /> */}
             </body>
         </html>
     );

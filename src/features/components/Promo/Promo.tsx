@@ -1,10 +1,11 @@
 import { InputField } from '../InputField/InputField';
+import type { IPromoProps } from '@/shared/components/PromoShared/promoShared';
 import './Promo.scss';
 
-export const Promo = () => {
+export const Promo = ({ text }: IPromoProps) => {
     return (
         <section className="promo">
-            <h1 className="promo__header">Movies Search</h1>
+            <h1 className="promo__header">{text}</h1>
             <InputField />
         </section>
     );

@@ -1,22 +1,21 @@
+import type { IMovieFiltersProps } from '@/shared/components/MovieFiltersShared/MovieFiltersShared';
 import './MovieFilter.scss';
 
-export const MovieFilter = () => {
+export const MovieFilter = ({ name, filters }: IMovieFiltersProps) => {
+    const filtersList = filters.map((filter, i) => {
+        return (
+            <li key={i} className="selectFilm__item">
+                {filter}
+            </li>
+        );
+    });
     return (
         <div className="selectFilm">
             <p className="selectFilm__filter">
-                Фильтр
+                {name}
                 <span className="arrow"></span>
             </p>
-            <ul className="selectFilm__ul">
-                <li className="selectFilm__item">text1</li>
-                <li className="selectFilm__item">text2</li>
-                <li className="selectFilm__item">text1</li>
-                <li className="selectFilm__item">text2</li>
-                <li className="selectFilm__item">text1</li>
-                <li className="selectFilm__item">text2</li>
-                <li className="selectFilm__item">text1</li>
-                <li className="selectFilm__item">text2</li>
-            </ul>
+            <ul className="selectFilm__ul">{filtersList}</ul>
         </div>
     );
 };
