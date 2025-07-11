@@ -2,17 +2,18 @@
 
 import { CardMovie } from '../ui/CardMovie/CardMovie';
 import useGetDataFromMoviesSearch from '@/features/services/getFilms';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import './FilmsBlock.scss';
 
 export const FilmsBlock = () => {
-    const data = useGetDataFromMoviesSearch({ page: 1 });
+    const { getAllMovies } = useGetDataFromMoviesSearch();
+    getAllMovies({ page: 1 }).then((movies) => console.log(movies));
 
-    useEffect(() => {
-        if (data) {
-            console.log(data);
-        }
-    }, [data]);
+    // useEffect(() => {
+    //     if (data) {
+    //         console.log(data);
+    //     }
+    // }, [data]);
 
     return (
         <article className="filmsBlock">

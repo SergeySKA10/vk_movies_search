@@ -5,4 +5,10 @@ interface Params {
     rating?: string[];
 }
 
-export type GetFilms = (params: Params) => Promise<any>;
+export type GetAllMovies = (params: Params) => Promise<any>;
+export type GetOneMovie = (id: string) => Promise<any>;
+
+export type GetData = () => {
+    getAllMovies: GetAllMovies;
+    getMovie: GetOneMovie;
+};
