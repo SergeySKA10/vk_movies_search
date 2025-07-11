@@ -1,41 +1,53 @@
+'use client';
+
 import Image from 'next/image';
 import { RatingStars } from '../ui/RatingStars/RatingStars';
+import useGetDataFromMoviesSearch from '@/features/services/getFilms';
+import { useEffect, useState, type JSX } from 'react';
+import type { IDataTransform } from '@/shared/utilsShared/transformDataShared';
 import './Movie.scss';
 
 export const Movie = ({ id }: { id?: string }) => {
-    console.log(id);
-    const name = 'name';
-    const descr = 'descr';
-    const year = 'year';
-    const rating = '10';
-    const data = 'data';
-    const genre = ['genre'];
+    const { getMovie } = useGetDataFromMoviesSearch();
+    const [content, setContent] = useState<JSX.Element | null>(null);
 
-    return (
-        <section className="movie">
-            <div className="movie__poster">
-                <Image
-                    src={'/poster_img/poster_not_found.jpg'}
-                    alt={`poster ${name}`}
-                    width={200}
-                    height={400}
-                />
-            </div>
-            <div className="movie__info">
-                <div className="movie__info_name">{name}</div>
-                <div className="movie__info_descr">{descr}</div>
-                <div className="movie__info_genres">
-                    {genre.map((el, i) => (
-                        <p key={i}>{el}</p>
-                    ))}
-                </div>
-                <div className="movie__info_year">{year}</div>
-                <div className="movie__info_data">{data}</div>
-                <div className="movie__info_rating">
-                    <RatingStars />
-                    <p>Рейтинг: {rating}</p>
-                </div>
-            </div>
-        </section>
-    );
+    useEffect(() => {
+        getMovie(id as string).then((movie: IDataTransform) => {
+            console.log(movie);
+            setContent(
+                <section key={movie.id} className="movie">
+                    <div className="movie__poster">
+                        <Image
+                            src={
+                                movie.poster
+                                    ? movie.poster
+                                    : '/poster_img/poster_not_found.jpg'
+                            }
+                            alt={`poster ${movie.name}`}
+                            width={200}
+                            height={400}
+                        />
+                    </div>
+                    <div className="movie__info">
+                        <div className="movie__info_name">{movie.name}</div>
+                        <div className="movie__info_descr">
+                            {movie.description}
+                        </div>
+                        <div className="movie__info_genres">
+                            {movie.genres.map((el, i) => (
+                                <p key={i}>{el as string}</p>
+                            ))}
+                        </div>
+                        <div className="movie__info_year">{movie.year}</div>
+                        <div className="movie__info_rating">
+                            <RatingStars />
+                            <p>Рейтинг: {movie.rating}</p>
+                        </div>
+                    </div>
+                </section>
+            );
+        });
+    }, []);
+
+    return <>{content ? content : <p>Loading...</p>}</>;
 };
