@@ -64,6 +64,9 @@
         font-size: 16px;
         font-weight: 400;
         color: $text_color;
+        &:hover {
+            background-color: $decor_color;
+        }
     }
 }
 

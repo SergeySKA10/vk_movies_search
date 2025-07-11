@@ -10,24 +10,24 @@ export const FilmsBlock = () => {
     const { getAllMovies } = useGetDataFromMoviesSearch();
     const [films, setFilms] = useState<JSX.Element | null>(null);
 
-    useEffect(() => {
-        getAllMovies({ page: 1 }).then((movies) => {
-            setFilms(
-                movies.map((el: IDataTransform) => {
-                    return (
-                        <CardMovie
-                            key={el.id}
-                            name={el.name}
-                            src={el.poster}
-                            year={`${el.year}`}
-                            rating={`${el.rating}`}
-                            link={`${el.id}`}
-                        />
-                    );
-                })
-            );
-        });
-    }, []);
+    // useEffect(() => {
+    //     getAllMovies({ page: 1 }).then((movies) => {
+    //         setFilms(
+    //             movies.map((el: IDataTransform) => {
+    //                 return (
+    //                     <CardMovie
+    //                         key={el.id}
+    //                         name={el.name}
+    //                         src={el.poster}
+    //                         year={`${el.year}`}
+    //                         rating={`${el.rating}`}
+    //                         link={`${el.id}`}
+    //                     />
+    //                 );
+    //             })
+    //         );
+    //     });
+    // }, []);
 
     return (
         <>

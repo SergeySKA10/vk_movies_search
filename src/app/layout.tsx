@@ -1,5 +1,9 @@
+'use client';
+
 import { Header } from '@/features/components/Header/Header';
 // import { PopupModal } from '@/features/components/ui/PopupModal/PopupModal';
+import { RootStoreContext } from '@/context/rootStoreContext';
+import { rootStore } from '@/store/rootStore';
 import { Roboto } from 'next/font/google';
 import '@/style/globals.scss';
 
@@ -17,9 +21,11 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${robotoSans.variable}`}>
-                <Header />
-                {children}
-                {/* <PopupModal /> */}
+                <RootStoreContext.Provider value={rootStore}>
+                    <Header />
+                    {children}
+                    {/* <PopupModal /> */}
+                </RootStoreContext.Provider>
             </body>
         </html>
     );

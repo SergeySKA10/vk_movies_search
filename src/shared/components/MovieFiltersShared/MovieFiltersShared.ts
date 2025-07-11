@@ -1,4 +1,4 @@
 export interface IMovieFiltersProps {
-    name: 'year' | 'genre' | 'rating';
+    name: string;
     filters: string[];
 }
