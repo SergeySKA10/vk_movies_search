@@ -2,39 +2,40 @@
 
 import { CardMovie } from '../ui/CardMovie/CardMovie';
 import useGetDataFromMoviesSearch from '@/features/services/getFilms';
-// import { useEffect } from 'react';
+import { useEffect, useState, type JSX } from 'react';
+import type { IDataTransform } from '@/shared/utilsShared/transformDataShared';
 import './FilmsBlock.scss';
 
 export const FilmsBlock = () => {
     const { getAllMovies } = useGetDataFromMoviesSearch();
-    getAllMovies({ page: 1 }).then((movies) => console.log(movies));
+    const [films, setFilms] = useState<JSX.Element | null>(null);
 
-    // useEffect(() => {
-    //     if (data) {
-    //         console.log(data);
-    //     }
-    // }, [data]);
+    useEffect(() => {
+        getAllMovies({ page: 1 }).then((movies) => {
+            setFilms(
+                movies.map((el: IDataTransform) => {
+                    return (
+                        <CardMovie
+                            key={el.id}
+                            name={el.name}
+                            src={el.poster}
+                            year={`${el.year}`}
+                            rating={`${el.rating}`}
+                            link={`${el.id}`}
+                        />
+                    );
+                })
+            );
+        });
+    }, []);
 
     return (
-        <article className="filmsBlock">
-            <CardMovie name="name" src="" year="2000" rating="10" link="123" />
-            <CardMovie name="name" src="" year="2000" rating="10" link="124" />
-            <CardMovie name="name" src="" year="2000" rating="10" link="125" />
-            <CardMovie name="name" src="" year="2000" rating="10" link="126" />
-            <CardMovie name="name" src="" year="2000" rating="10" link="127" />
-            <CardMovie name="name" src="" year="2000" rating="10" link="128" />
-            <CardMovie name="name" src="" year="2000" rating="10" link="129" />
-            <CardMovie name="name" src="" year="2000" rating="10" link="130" />
-            <CardMovie name="name" src="" year="2000" rating="10" link="131" />
-            <CardMovie name="name" src="" year="2000" rating="10" link="132" />
-            <CardMovie name="name" src="" year="2000" rating="10" link="133" />
-            <CardMovie name="name" src="" year="2000" rating="10" link="134" />
-            <CardMovie name="name" src="" year="2000" rating="10" link="135" />
-            <CardMovie name="name" src="" year="2000" rating="10" link="136" />
-            <CardMovie name="name" src="" year="2000" rating="10" link="137" />
-            <CardMovie name="name" src="" year="2000" rating="10" link="138" />
-            <CardMovie name="name" src="" year="2000" rating="10" link="139" />
-            <CardMovie name="name" src="" year="2000" rating="10" link="140" />
-        </article>
+        <>
+            {films ? (
+                <article className="filmsBlock">{films}</article>
+            ) : (
+                <p>Loading...</p>
+            )}
+        </>
     );
 };

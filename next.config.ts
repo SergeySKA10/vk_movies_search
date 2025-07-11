@@ -9,6 +9,18 @@ const nextConfig: NextConfig = {
             $text_hover_color: #5555ff;
         `,
     },
+    images: {
+        domains: ['image.openmoviedb.com'],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'image.openmoviedb.com',
+                port: '',
+                pathname: '/kinopoisk-images/*/**',
+                search: '',
+            },
+        ],
+    },
 };
 
 export default nextConfig;

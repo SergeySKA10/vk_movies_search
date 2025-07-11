@@ -14,8 +14,8 @@ export const transformDataMovies = (data: any): IDataTransform => {
             : 'Описание отсутствует',
         genres:
             data.genres.length !== 0
-                ? data.genres.join(', ')
-                : 'Описание жанров отсутствует',
+                ? data.genres.map((el) => el.name!)
+                : ['Описание жанров отсутствует'],
         rating: data.rating.imdb,
         year: data.year,
     };

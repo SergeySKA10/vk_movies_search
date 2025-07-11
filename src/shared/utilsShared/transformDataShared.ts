@@ -1,4 +1,7 @@
-type GenresData = string[];
+interface IGenre {
+    name?: string;
+}
+type GenresData = IGenre[];
 
 export interface IDataTransform {
     id: number;
