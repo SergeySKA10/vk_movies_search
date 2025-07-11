@@ -1,7 +1,19 @@
+'use client';
+
 import { CardMovie } from '../ui/CardMovie/CardMovie';
+import useGetDataFromMoviesSearch from '@/features/services/getFilms';
+import { useEffect } from 'react';
 import './FilmsBlock.scss';
 
 export const FilmsBlock = () => {
+    const data = useGetDataFromMoviesSearch({ page: 1 });
+
+    useEffect(() => {
+        if (data) {
+            console.log(data);
+        }
+    }, [data]);
+
     return (
         <article className="filmsBlock">
             <CardMovie name="name" src="" year="2000" rating="10" link="123" />
