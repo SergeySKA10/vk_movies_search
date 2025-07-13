@@ -19,7 +19,6 @@ const useGetDataFromMoviesSearch: GetData = () => {
         const filterYears = year ? `&year=${year}` : '';
         const filterRating = rating ? `rating.imdb=${rating}` : '';
         const filterGenre = genre ? `&genres.name=${genre}` : '';
-
         try {
             const data = await request({
                 url: `${_apiBaseURL}?page=${page}&limit=50&type=movie${filterYears}${filterRating}${filterGenre}`,

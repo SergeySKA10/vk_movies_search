@@ -37,7 +37,7 @@ export const CardMovie = observer(
                     </p>
                     <p className="cardMovie__descr_year">Год: {year}</p>
                     <div className="cardMovie__descr_rating">
-                        <RatingStars />
+                        <RatingStars rating={rating} />
                         <p>Рейтинг: {rating}</p>
                     </div>
                 </div>
