@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, type JSX } from 'react';
-
+//
 import './RatingStars.scss';
 
 export const RatingStars = ({ rating }: { rating: string }) => {
