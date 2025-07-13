@@ -2,12 +2,14 @@
 
 import { useRef, useState, useEffect } from 'react';
 import { useStores } from '@/context/rootStoreContext';
+import { observer } from 'mobx-react-lite';
 import type { IMovieFiltersProps } from '@/shared/components/MovieFiltersShared/MovieFiltersShared';
 import './MovieFilter.scss';
 
-export const MovieFilter = ({ name, filters }: IMovieFiltersProps) => {
+export const MovieFilter = observer(({ name, filters }: IMovieFiltersProps) => {
     const ref = useRef<HTMLDivElement>(null);
     const {
+        filter,
         filter: {
             setActiveFilterYear,
             setActiveFilterGenre,
@@ -20,6 +22,7 @@ export const MovieFilter = ({ name, filters }: IMovieFiltersProps) => {
     const [showFilter, setShowFilters] = useState<boolean>(false);
 
     useEffect(() => {
+        console.log(activeFilterGenre);
         if (showFilter) {
             (ref.current as HTMLDivElement).classList.add('active_filter');
             (
@@ -35,30 +38,34 @@ export const MovieFilter = ({ name, filters }: IMovieFiltersProps) => {
 
     const updateFilter = (value: string, id: string) => {
         console.log(value, id);
-        switch (id) {
-            case 'year':
-                if (value == 'сброс фильтра') {
-                    setActiveFilterYear('');
-                } else {
-                    setActiveFilterYear(value);
-                }
-                break;
-            case 'genre':
-                if (value == 'сброс фильтра') {
-                    setActiveFilterGenre('');
-                } else {
-                    setActiveFilterGenre(value);
-                }
-                break;
-            case 'rating':
-                if (value == 'сброс фильтра') {
-                    setActiveFilterRating('');
-                } else {
-                    setActiveFilterRating(value);
-                }
-                break;
-            default:
-                throw new Error('Фильтр отсутствует');
+        if (value && id) {
+            switch (id) {
+                case 'year':
+                    if (value == 'сброс фильтра') {
+                        setActiveFilterYear.apply(filter, ['']);
+                    } else {
+                        setActiveFilterYear.apply(filter, [value]);
+                    }
+                    break;
+                case 'genre':
+                    if (value == 'сброс фильтра') {
+                        setActiveFilterGenre.apply(filter, ['']);
+                    } else {
+                        setActiveFilterGenre.apply(filter, [value]);
+                    }
+                    break;
+                case 'rating':
+                    if (value == 'сброс фильтра') {
+                        setActiveFilterRating.apply(filter, ['']);
+                    } else {
+                        setActiveFilterRating.apply(filter, [value]);
+                    }
+                    break;
+                default:
+                    throw new Error('Фильтр отсутствует');
+            }
+        } else {
+            throw new Error('Фильтр отсутствует id или name ');
         }
     };
 
@@ -69,6 +76,7 @@ export const MovieFilter = ({ name, filters }: IMovieFiltersProps) => {
                 className="selectFilm__item"
                 data-id={name}
                 onClick={(e) => {
+                    e.stopPropagation();
                     setShowFilters(!showFilter);
                     updateFilter(
                         (e.target as HTMLElement).textContent!,
@@ -93,19 +101,17 @@ export const MovieFilter = ({ name, filters }: IMovieFiltersProps) => {
         if (activeFilterGenre) {
             filterName = activeFilterGenre;
         } else {
-            filterName = 'Фильтровать по году';
+            filterName = 'Фильтровать по жанру';
         }
     } else if (name === 'rating') {
         if (activeFilterRating) {
             filterName = activeFilterRating;
         } else {
-            filterName = 'Фильтровать по году';
+            filterName = 'Фильтровать по рейтингу';
         }
     } else {
         filterName = 'Not found filter';
     }
-
-    console.log(activeFilterYear);
 
     return (
         <div
@@ -120,4 +126,4 @@ export const MovieFilter = ({ name, filters }: IMovieFiltersProps) => {
             <ul className="selectFilm__ul">{filtersList}</ul>
         </div>
     );
-};
+});

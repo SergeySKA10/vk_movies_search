@@ -1,4 +1,6 @@
-import { makeObservable, observable, action } from 'mobx';
+'use client';
+
+import { makeAutoObservable } from 'mobx';
 import type { IFilterStore } from '@/shared/storeShared/filterStoreShared';
 
 class FilterStore implements IFilterStore {
@@ -31,14 +33,7 @@ class FilterStore implements IFilterStore {
     activeFilterRating = '';
 
     constructor() {
-        makeObservable(this, {
-            activeFilterYear: observable,
-            activeFilterGenre: observable,
-            activeFilterRating: observable,
-            setActiveFilterYear: action,
-            setActiveFilterGenre: action,
-            setActiveFilterRating: action,
-        });
+        makeAutoObservable(this);
     }
 
     createFiltersYears() {
@@ -56,14 +51,17 @@ class FilterStore implements IFilterStore {
     }
 
     setActiveFilterYear(value: string) {
+        console.log(this);
         this.activeFilterYear = value;
     }
 
     setActiveFilterGenre(value: string) {
+        // console.log(value);
         this.activeFilterGenre = value;
     }
 
     setActiveFilterRating(value: string) {
+        // console.log(value);
         this.activeFilterRating = value;
     }
 }

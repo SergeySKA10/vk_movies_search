@@ -1,7 +1,7 @@
 'use client';
 
 import { Header } from '@/features/components/Header/Header';
-// import { PopupModal } from '@/features/components/ui/PopupModal/PopupModal';
+import { PopupModal } from '@/features/components/ui/PopupModal/PopupModal';
 import { RootStoreContext } from '@/context/rootStoreContext';
 import { rootStore } from '@/store/rootStore';
 import { Roboto } from 'next/font/google';
@@ -24,7 +24,7 @@ export default function RootLayout({
                 <RootStoreContext.Provider value={rootStore}>
                     <Header />
                     {children}
-                    {/* <PopupModal /> */}
+                    <PopupModal />
                 </RootStoreContext.Provider>
             </body>
         </html>

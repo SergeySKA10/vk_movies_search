@@ -2,9 +2,10 @@
 
 import { MovieFilter } from '../ui/MovieFilter/MovieFilter';
 import { useStores } from '@/context/rootStoreContext';
+import { observer } from 'mobx-react-lite';
 import './FiltersBlock.scss';
 
-export const FiltersBlock = () => {
+export const FiltersBlock = observer(() => {
     const {
         filter: { filtersYears, filtersGenre, filtersRating },
     } = useStores();
@@ -19,4 +20,4 @@ export const FiltersBlock = () => {
             <nav className="filterBlock__list">{filtersMovie}</nav>
         </aside>
     );
-};
+});
