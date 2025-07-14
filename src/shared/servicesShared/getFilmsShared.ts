@@ -1,3 +1,5 @@
+import type { Dispatch, SetStateAction } from 'react';
+
 interface Params {
     page: number;
     year: string;
@@ -11,4 +13,6 @@ export type GetOneMovie = (id: string) => Promise<any>;
 export type GetData = () => {
     getAllMovies: GetAllMovies;
     getMovie: GetOneMovie;
+    process: string;
+    setProcess: Dispatch<SetStateAction<string>>;
 };

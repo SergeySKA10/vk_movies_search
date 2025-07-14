@@ -10,9 +10,10 @@ import type {
 
 const useGetDataFromMoviesSearch: GetData = () => {
     const _apiBaseURL = `https://api.kinopoisk.dev/v1.4/movie`;
-    const _apiKey = process.env.NEXT_PUBLIC_KINOPOISK_KEY_API;
+    // const _apiKey = process.env.NEXT_PUBLIC_KINOPOISK_KEY_API;
+    const _apiKey = 'XE47S2T-1C3MT41-KFM0CM7-5GZMXEN';
 
-    const request = useHttp();
+    const { request, process, setProcess } = useHttp();
 
     const getAllMovies: GetAllMovies = async (params) => {
         const { page, year, rating, genre } = params;
@@ -59,7 +60,7 @@ const useGetDataFromMoviesSearch: GetData = () => {
         }
     };
 
-    return { getAllMovies, getMovie };
+    return { getAllMovies, getMovie, process, setProcess };
 };
 
 export default useGetDataFromMoviesSearch;

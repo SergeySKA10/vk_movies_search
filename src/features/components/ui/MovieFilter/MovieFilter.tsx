@@ -1,5 +1,6 @@
 'use client';
 
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { useRef, useState, useEffect } from 'react';
 import { useStores } from '@/context/rootStoreContext';
 import { observer } from 'mobx-react-lite';
@@ -7,6 +8,9 @@ import type { IMovieFiltersProps } from '@/shared/components/MovieFiltersShared/
 import './MovieFilter.scss';
 
 export const MovieFilter = observer(({ name, filters }: IMovieFiltersProps) => {
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const { replace } = useRouter();
     const ref = useRef<HTMLDivElement>(null);
     const {
         filter,
@@ -21,8 +25,16 @@ export const MovieFilter = observer(({ name, filters }: IMovieFiltersProps) => {
     } = useStores();
     const [showFilter, setShowFilters] = useState<boolean>(false);
 
+    const onChangeParams = (
+        key: 'year' | 'genre' | 'rating',
+        value: string
+    ): void => {
+        const params = new URLSearchParams(searchParams);
+        params.set(`${key}`, `${value}`);
+        replace(`${pathname}?${params.toString()}`);
+    };
+
     useEffect(() => {
-        console.log(activeFilterGenre);
         if (showFilter) {
             (ref.current as HTMLDivElement).classList.add('active_filter');
             (
@@ -63,6 +75,12 @@ export const MovieFilter = observer(({ name, filters }: IMovieFiltersProps) => {
                     break;
                 default:
                     throw new Error('Фильтр отсутствует');
+            }
+
+            if (value === 'сброс фильтра') {
+                onChangeParams(id, '');
+            } else {
+                onChangeParams(id, value);
             }
         } else {
             throw new Error('Фильтр отсутствует id или name ');

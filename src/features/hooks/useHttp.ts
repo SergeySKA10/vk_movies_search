@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import type { IRequestConfig } from '@/shared/hooksShared/requestShared';
 
 export const useHttp = () => {
+    const [process, setProcess] = useState('idle');
     const request = async ({
         url,
         method = 'GET',
         body = null,
         headers = { 'Content-Type': 'application/json' },
     }: IRequestConfig) => {
+        setProcess('loading');
         try {
             const response = await fetch(url, {
                 method,
@@ -22,6 +25,7 @@ export const useHttp = () => {
 
             return await response.json();
         } catch (error) {
+            setProcess('error');
             if (error instanceof Error) {
                 throw new Error(`error message: ${error.message}`);
             } else {
@@ -30,5 +34,5 @@ export const useHttp = () => {
         }
     };
 
-    return request;
+    return { request, process, setProcess };
 };

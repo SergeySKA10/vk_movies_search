@@ -40,7 +40,7 @@ export const Movie = ({ id }: { id?: string }) => {
                         </div>
                         <div className="movie__info_year">{movie.year}</div>
                         <div className="movie__info_rating">
-                            <RatingStars />
+                            <RatingStars rating={`${movie.rating}`} />
                             <p>Рейтинг: {movie.rating}</p>
                         </div>
                     </div>

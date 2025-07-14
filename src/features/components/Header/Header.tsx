@@ -1,6 +1,6 @@
 'use client';
-
-import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { LinkPage } from '../ui/LinkPage/LinkPage';
 import type {
     ILinksPages,
@@ -10,6 +10,13 @@ import './Header.scss';
 
 export const Header = () => {
     const [activeLink, setActiveLink] = useState<LinkActive>('main');
+    const path = usePathname();
+    console.log(path);
+
+    useEffect(() => {
+        const active = path === '/' ? 'main' : 'favorites';
+        setActiveLink(active);
+    }, []);
 
     const linksPages: ILinksPages = [
         {
