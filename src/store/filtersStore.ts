@@ -36,6 +36,7 @@ class FilterStore implements IFilterStore {
         makeAutoObservable(this);
     }
 
+    // функция для создания фильтров с 1990 года
     createFiltersYears() {
         const years: string[] = [];
         const currentYear = new Date().getFullYear();
@@ -50,18 +51,16 @@ class FilterStore implements IFilterStore {
         return years;
     }
 
+    // функции установки фильров
     setActiveFilterYear(value: string) {
-        console.log(this);
         this.activeFilterYear = value;
     }
 
     setActiveFilterGenre(value: string) {
-        // console.log(value);
         this.activeFilterGenre = value;
     }
 
     setActiveFilterRating(value: string) {
-        // console.log(value);
         this.activeFilterRating = value;
     }
 }

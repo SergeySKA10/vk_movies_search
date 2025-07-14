@@ -20,6 +20,7 @@ export const PopupModal = observer(() => {
 
     const activeClazz = showPopup === 'show' ? 'popup_active' : '';
 
+    // функция изменения состояния показа модального окна
     const handleHidePopup = () => {
         changeStateShowPopup.apply(popup, ['hide']);
     };
@@ -27,8 +28,12 @@ export const PopupModal = observer(() => {
     return (
         <section className={`popup ${activeClazz}`}>
             <div className="popup__window">
-                <div className="close" onClick={handleHidePopup}></div>
-                <p className="popup__descr">
+                <div
+                    tabIndex={0}
+                    className="close"
+                    onClick={handleHidePopup}
+                ></div>
+                <p tabIndex={0} className="popup__descr">
                     Хотите{' '}
                     {!action ? 'добавить в избранное' : 'удалить из избранного'}{' '}
                     ?

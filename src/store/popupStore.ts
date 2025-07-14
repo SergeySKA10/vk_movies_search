@@ -9,6 +9,7 @@ class PopupStore implements IPopupStore {
         makeAutoObservable(this);
     }
 
+    // изменение состояния модального окна
     changeStateShowPopup(value: IPopupStore['showPopup']) {
         this.showPopup = value;
     }

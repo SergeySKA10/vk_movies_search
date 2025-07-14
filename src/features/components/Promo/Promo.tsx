@@ -5,7 +5,9 @@ import './Promo.scss';
 export const Promo = ({ text }: IPromoProps) => {
     return (
         <section className="promo">
-            <h1 className="promo__header">{text}</h1>
+            <h1 tabIndex={0} className="promo__header">
+                {text}
+            </h1>
             {text === 'Избранное' ? null : <InputField />}
         </section>
     );

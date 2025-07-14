@@ -1,5 +1,6 @@
 import type { IDataTransform } from '@/shared/utilsShared/transformDataShared';
 
+// функция для преобразования данных в объекты с нужными значениями
 export const transformDataMovies = (data: any): IDataTransform => {
     return {
         id: data.id,

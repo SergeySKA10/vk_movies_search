@@ -1,5 +1,11 @@
+import type { Metadata } from 'next';
 import { Movie } from '@/features/components/Movie/Movie';
 import './MoviePage.scss';
+
+export const metadata: Metadata = {
+    title: 'Страница фильма',
+    description: 'Информация о фильме',
+};
 
 export default async function Film({
     params,

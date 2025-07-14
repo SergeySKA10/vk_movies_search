@@ -4,7 +4,7 @@ import './LinkPage.scss';
 
 export const LinkPage = ({ link, text, activeClass }: ILinkPageProps) => {
     return (
-        <Link className={`linkpage ${activeClass}`} href={link}>
+        <Link tabIndex={0} className={`linkpage ${activeClass}`} href={link}>
             {text}
         </Link>
     );

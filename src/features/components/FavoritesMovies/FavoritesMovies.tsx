@@ -13,11 +13,14 @@ export const FavoritesMovies = observer(() => {
     } = useStores();
 
     const content: JSX.Element[] = [];
+
+    // получение данных из localstorage и их merge c глобальным состоянием
     if (localStorage && localStorage.getItem('favorites')) {
         const obj = JSON.parse(localStorage.getItem('favorites')!);
         mergeFavoritesItemsWithLoacalStorage.apply(favorite, [obj]);
     }
 
+    // формирование контента избранных фильмов
     for (const key in favoritesItems) {
         const movie = favoritesItems[key];
         content.push(

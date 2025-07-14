@@ -25,6 +25,7 @@ export const MovieFilter = observer(({ name, filters }: IMovieFiltersProps) => {
     } = useStores();
     const [showFilter, setShowFilters] = useState<boolean>(false);
 
+    // функция для установки search params
     const onChangeParams = (
         key: 'year' | 'genre' | 'rating',
         value: string
@@ -34,6 +35,7 @@ export const MovieFilter = observer(({ name, filters }: IMovieFiltersProps) => {
         replace(`${pathname}?${params.toString()}`);
     };
 
+    // реализация разворачивания фильтров
     useEffect(() => {
         if (showFilter) {
             (ref.current as HTMLDivElement).classList.add('active_filter');
@@ -48,6 +50,7 @@ export const MovieFilter = observer(({ name, filters }: IMovieFiltersProps) => {
         }
     }, [showFilter]);
 
+    // обновление глобального состояния фильтров
     const updateFilter = (value: string, id: string) => {
         console.log(value, id);
         if (value && id) {
@@ -87,9 +90,11 @@ export const MovieFilter = observer(({ name, filters }: IMovieFiltersProps) => {
         }
     };
 
+    // формирование фильтров
     const filtersList = filters.map((filter, i) => {
         return (
             <li
+                tabIndex={0}
                 key={i}
                 className="selectFilm__item"
                 data-id={name}
@@ -109,6 +114,7 @@ export const MovieFilter = observer(({ name, filters }: IMovieFiltersProps) => {
 
     let filterName: string;
 
+    // формирование названия блока фильтров
     if (name === 'year') {
         if (activeFilterYear) {
             filterName = activeFilterYear;
@@ -134,6 +140,7 @@ export const MovieFilter = observer(({ name, filters }: IMovieFiltersProps) => {
     return (
         <div
             ref={ref}
+            tabIndex={0}
             className="selectFilm"
             onClick={() => setShowFilters(!showFilter)}
         >

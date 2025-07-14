@@ -9,6 +9,7 @@ import type {
     GetFilmByName,
 } from '@/shared/servicesShared/getFilmsShared';
 
+// хук - обертка для сервисов
 const useGetDataFromMoviesSearch: GetData = () => {
     const _apiBaseURL = `https://api.kinopoisk.dev/v1.4/movie`;
     const _apiSearchByName = `${_apiBaseURL}/search?page=1&limit=10&query=`;
@@ -17,6 +18,7 @@ const useGetDataFromMoviesSearch: GetData = () => {
 
     const { request, process, setProcess } = useHttp();
 
+    // функция получения всех фильмов
     const getAllMovies: GetAllMovies = async (params) => {
         const { page, year, rating, genre } = params;
         const filterYears = year ? `&year=${year}` : '';
@@ -41,6 +43,7 @@ const useGetDataFromMoviesSearch: GetData = () => {
         }
     };
 
+    // функция получения одного фильма
     const getMovie: GetOneMovie = async (id) => {
         try {
             const data = await request({
@@ -61,6 +64,7 @@ const useGetDataFromMoviesSearch: GetData = () => {
         }
     };
 
+    // функция получения фильма по названию
     const getFilmByName: GetFilmByName = async (value: string) => {
         try {
             const data = await request({

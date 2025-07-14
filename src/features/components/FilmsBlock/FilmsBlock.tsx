@@ -6,9 +6,9 @@ import { observer } from 'mobx-react-lite';
 import { useStores } from '@/context/rootStoreContext';
 import { Spinner } from '../ui/Spinner/Spinner';
 import { Error } from '../ui/Error/Error';
-import { useEffect, useState, useMemo, useRef } from 'react';
-import type { IDataTransform } from '@/shared/utilsShared/transformDataShared';
+import { useEffect, useState, useRef, type JSX } from 'react';
 import './FilmsBlock.scss';
+import './FilmBlockMedia.scss';
 
 export const FilmsBlock = observer(() => {
     const refMovieBlock = useRef<HTMLElement | null>(null);
@@ -22,13 +22,10 @@ export const FilmsBlock = observer(() => {
         movies: { addInStateMovies, offset, setOffset, mvs },
     } = useStores();
 
-    if (localStorage && localStorage.getItem('favorites')) {
-        const obj = JSON.parse(localStorage.getItem('favorites')!);
-        mergeFavoritesItemsWithLoacalStorage.apply(favorite, [obj]);
-    }
-
+    // состяние для повторного запроса в случае ошибки
     const [tryAgainLoading, setTryAgainLoading] = useState<boolean>(false);
 
+    // получение данных с API, добалениие в глобальное состояние
     useEffect(() => {
         getAllMovies({
             page: offset,
@@ -46,33 +43,40 @@ export const FilmsBlock = observer(() => {
                 }
                 setProcess('idle');
             })
+            .then(() => {
+                // проверка данных в localstorage и их merge с глобальным состоянием
+                if (localStorage && localStorage.getItem('favorites')) {
+                    const obj = JSON.parse(localStorage.getItem('favorites')!);
+                    mergeFavoritesItemsWithLoacalStorage.apply(favorite, [obj]);
+                }
+            })
             .catch(() => {
                 setProcess('error');
             });
     }, [tryAgainLoading, loadData]);
 
-    const content = useMemo(() => {
-        return () => {
-            return mvs.map((el: IDataTransform) => {
-                return (
-                    <CardMovie
-                        key={el.id}
-                        id={`${el.id}`}
-                        name={el.name}
-                        src={el.poster}
-                        year={`${el.year}`}
-                        rating={`${el.rating}`}
-                        link={`${el.id}`}
-                    />
-                );
-            });
-        };
-    }, [mvs]);
+    // формирование контента получаемого из глобального состояния
+    const content: JSX.Element[] = [];
+    for (const key in mvs) {
+        content.push(
+            <CardMovie
+                key={mvs[key].id}
+                id={`${mvs[key].id}`}
+                name={mvs[key].name}
+                src={mvs[key].poster}
+                year={`${mvs[key].year}`}
+                rating={`${mvs[key].rating}`}
+                link={`${mvs[key].id}`}
+            />
+        );
+    }
 
+    // добавление обработчика события scroll для подгрузки данных - НЕ РЕАЛИЗОВАН до конца
     useEffect(() => {
         const articleMovies = refMovieBlock.current;
 
         const handleScroll = () => {
+            console.log('scroll');
             if (articleMovies) {
                 const { scrollTop, scrollHeight, clientHeight } = articleMovies;
                 if (
@@ -85,6 +89,7 @@ export const FilmsBlock = observer(() => {
             }
         };
 
+        // добавление обработчика
         if (articleMovies) {
             articleMovies.addEventListener('scroll', handleScroll);
         }
@@ -94,21 +99,25 @@ export const FilmsBlock = observer(() => {
                 articleMovies.removeEventListener('scroll', handleScroll);
             }
         };
-    }, [mvs]);
+    }, []);
 
     return (
         <>
-            {process === 'loading' && mvs.length === 0 ? (
+            {process === 'loading' && Object.keys(mvs).length === 0 ? (
                 <Spinner />
-            ) : process === 'error' && mvs.length === 0 ? (
+            ) : process === 'error' && Object.keys(mvs).length === 0 ? (
                 <Error
                     setTryAgainLoading={setTryAgainLoading}
                     tryAgainLoading={tryAgainLoading}
                 />
             ) : (
                 <>
-                    <article ref={refMovieBlock} className="filmsBlock">
-                        {content()}
+                    <article
+                        tabIndex={0}
+                        ref={refMovieBlock}
+                        className="filmsBlock"
+                    >
+                        {content}
                     </article>
                     {loadData ? (
                         <div className="loadData">

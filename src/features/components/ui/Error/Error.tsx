@@ -14,10 +14,14 @@ export const Error = ({ setTryAgainLoading, tryAgainLoading }: IErrorProps) => {
                 textAlign: 'center',
             }}
         >
-            <p style={{ color: 'red', fontSize: '16px', fontWeight: 400 }}>
+            <p
+                tabIndex={0}
+                style={{ color: 'red', fontSize: '16px', fontWeight: 400 }}
+            >
                 Произошла ошибка при запросе данных
             </p>
             <button
+                tabIndex={0}
                 style={{
                     display: 'flex',
                     justifyContent: 'center',

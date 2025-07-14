@@ -11,6 +11,8 @@ export const LikeFavorites = observer(
             favorite,
             favorite: { setIndexActive, setMovieActive, setActionActive },
         } = useStores();
+
+        // функция для обработки события
         const handlerAddFavorite = () => {
             setMovieActive.apply(favorite, [movie]);
             setActionActive.apply(favorite, [active]);
@@ -21,6 +23,7 @@ export const LikeFavorites = observer(
 
         return (
             <div
+                tabIndex={0}
                 className="heart"
                 style={{ backgroundColor: backgroundColor }}
                 onClick={(e) => {

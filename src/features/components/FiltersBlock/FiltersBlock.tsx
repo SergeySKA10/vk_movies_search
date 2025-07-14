@@ -5,6 +5,7 @@ import { MovieFilter } from '../ui/MovieFilter/MovieFilter';
 import { useStores } from '@/context/rootStoreContext';
 import { observer } from 'mobx-react-lite';
 import './FiltersBlock.scss';
+import './FilterBlockMedia.scss';
 
 export const FiltersBlock = observer(() => {
     const searchParams = useSearchParams();
@@ -22,8 +23,11 @@ export const FiltersBlock = observer(() => {
             setActiveFilterRating,
         },
     } = useStores();
+
+    // создание массива фильтров
     const filtersItem = [filtersYears, filtersGenre, filtersRating];
 
+    // синхронизация с serarch params
     if (year) {
         setActiveFilterYear.apply(filter, [year]);
     }

@@ -16,10 +16,12 @@ class FavoriteStore implements IFavoriteStore {
         makeAutoObservable(this);
     }
 
+    // установка индекса
     setIndexActive(id: string) {
         this.indexActive = id;
     }
 
+    // объединение данных с localsorage
     mergeFavoritesItemsWithLoacalStorage(
         obj: IFavoriteStore['favoritesItems']
     ) {
@@ -30,22 +32,27 @@ class FavoriteStore implements IFavoriteStore {
         }
     }
 
+    // установка фильма с которым работает пользователь
     setMovieActive(movie: ICardMovieProps) {
         this.movie = movie;
     }
 
+    // состояние like для вбранного фильма
     setActionActive(action: boolean) {
         this.action = action;
     }
 
+    // добавление фильма в состояние избранных из localstorage
     addMovieInFavoritesFromLoaclStorage(movie: ICardMovieProps) {
         this.favoritesItems[movie.id] = movie;
     }
 
+    // добавление фильма в состояние избранных
     addMovieInFavorites() {
         this.favoritesItems[this.movie.id] = this.movie;
     }
 
+    // удаление фильма из состояние избранных
     deleteMovieFromFavorites() {
         delete this.favoritesItems[this.indexActive];
     }

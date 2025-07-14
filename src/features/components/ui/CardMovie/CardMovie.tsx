@@ -14,10 +14,12 @@ export const CardMovie = observer(
         const {
             favorite: { favoritesItems },
         } = useStores();
+
+        // boolen props для обозначения фильмов, которые находятся в избранном
         const activeLike = !!favoritesItems[id];
 
         return (
-            <Link href={link} className="cardMovie">
+            <Link tabIndex={0} href={link} className="cardMovie">
                 <LikeFavorites
                     active={activeLike}
                     index={id}
@@ -25,6 +27,7 @@ export const CardMovie = observer(
                 />
                 <div className="cardMovie__poster">
                     <Image
+                        tabIndex={0}
                         src={src ? src : '/poster_img/poster_not_found.jpg'}
                         alt={`poster: ${name}`}
                         width={100}
@@ -32,13 +35,15 @@ export const CardMovie = observer(
                     />
                 </div>
                 <div className="cardMovie__descr">
-                    <p className="cardMovie__descr_name">
+                    <p tabIndex={0} className="cardMovie__descr_name">
                         Название фильма: {name}
                     </p>
-                    <p className="cardMovie__descr_year">Год: {year}</p>
+                    <p tabIndex={0} className="cardMovie__descr_year">
+                        Год: {year}
+                    </p>
                     <div className="cardMovie__descr_rating">
                         <RatingStars rating={rating} />
-                        <p>Рейтинг: {rating}</p>
+                        <p tabIndex={0}>Рейтинг: {rating}</p>
                     </div>
                 </div>
             </Link>

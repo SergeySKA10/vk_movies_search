@@ -11,6 +11,7 @@ export const Movie = ({ id }: { id?: string }) => {
     const { getMovie } = useGetDataFromMoviesSearch();
     const [content, setContent] = useState<JSX.Element | null>(null);
 
+    // запрос и формирование контента для сраницы с подробным описание фильма
     useEffect(() => {
         getMovie(id as string).then((movie: IDataTransform) => {
             console.log(movie);
@@ -18,6 +19,7 @@ export const Movie = ({ id }: { id?: string }) => {
                 <section key={movie.id} className="movie">
                     <div className="movie__poster">
                         <Image
+                            tabIndex={0}
                             src={
                                 movie.poster
                                     ? movie.poster
@@ -29,19 +31,25 @@ export const Movie = ({ id }: { id?: string }) => {
                         />
                     </div>
                     <div className="movie__info">
-                        <div className="movie__info_name">{movie.name}</div>
-                        <div className="movie__info_descr">
+                        <div tabIndex={0} className="movie__info_name">
+                            {movie.name}
+                        </div>
+                        <div tabIndex={0} className="movie__info_descr">
                             {movie.description}
                         </div>
                         <div className="movie__info_genres">
                             {movie.genres.map((el, i) => (
-                                <p key={i}>{el as string}</p>
+                                <p tabIndex={0} key={i}>
+                                    {el as string}
+                                </p>
                             ))}
                         </div>
-                        <div className="movie__info_year">{movie.year}</div>
+                        <div tabIndex={0} className="movie__info_year">
+                            {movie.year}
+                        </div>
                         <div className="movie__info_rating">
                             <RatingStars rating={`${movie.rating}`} />
-                            <p>Рейтинг: {movie.rating}</p>
+                            <p tabIndex={0}>Рейтинг: {movie.rating}</p>
                         </div>
                     </div>
                 </section>

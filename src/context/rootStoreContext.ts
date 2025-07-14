@@ -6,6 +6,7 @@ import { rootStore } from '@/store/rootStore';
 export const RootStoreContext = createContext<typeof rootStore | null>(null);
 
 export const useStores = () => {
+    // контекс для проброса состояний из менеджера
     const context = useContext(RootStoreContext);
 
     if (context === null) {

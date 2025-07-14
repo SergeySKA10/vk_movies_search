@@ -2,7 +2,9 @@ import { useState } from 'react';
 import type { IRequestConfig } from '@/shared/hooksShared/requestShared';
 
 export const useHttp = () => {
+    // создание сотояния процесса получения данных
     const [process, setProcess] = useState('idle');
+
     const request = async ({
         url,
         method = 'GET',

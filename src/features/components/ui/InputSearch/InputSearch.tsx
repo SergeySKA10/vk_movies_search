@@ -14,13 +14,17 @@ export const InputSearch = observer(() => {
         movies: { clearMvs, addInStateMovies },
     } = useStores();
 
+    // создание состояния для получения значения из инпута
     const [inputValue, setInputValue] = useState<string>('');
+    // создание состояния для debounce функции
     const [debounceValue, setDebounceValue] = useState<string>('');
 
+    // функция обработки события и обновления состояния
     const onHandleInput = (e: ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
     };
 
+    // добавление значения в debounce состояние с задержкой
     useEffect(() => {
         const timerId = setTimeout(() => {
             setDebounceValue(inputValue);
@@ -31,13 +35,13 @@ export const InputSearch = observer(() => {
         };
     }, [inputValue]);
 
+    // отправка запроса - НЕ Реализована
     useEffect(() => {
         getFilmByName(debounceValue)
             .then((data) => {
+                // отчищаем глобальное состояние
                 clearMvs.apply(movies);
-                return data;
-            })
-            .then((data) => {
+                // добавляем значения
                 addInStateMovies.apply(movies, [data]);
             })
             .then(() => {
@@ -50,6 +54,7 @@ export const InputSearch = observer(() => {
 
     return (
         <input
+            tabIndex={0}
             className="inputSearch"
             name="search"
             type="text"

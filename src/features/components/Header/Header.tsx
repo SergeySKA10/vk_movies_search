@@ -9,14 +9,17 @@ import type {
 import './Header.scss';
 
 export const Header = () => {
-    const [activeLink, setActiveLink] = useState<LinkActive>('main');
+    const [activeLink, setActiveLink] = useState<LinkActive | ''>('main');
     const path = usePathname();
 
+    // получение состояния активной ссылки
     useEffect(() => {
-        const active = path === '/' ? 'main' : 'favorites';
+        const active =
+            path === '/' ? 'main' : path === '/favorites' ? 'favorites' : '';
         setActiveLink(active);
     }, []);
 
+    // объект с существующими сылками
     const linksPages: ILinksPages = [
         {
             id: 'main',

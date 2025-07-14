@@ -7,10 +7,12 @@ import './RatingStars.scss';
 export const RatingStars = ({ rating }: { rating: string }) => {
     const [stars, setStars] = useState<JSX.Element[]>([]);
 
+    // создание компонента рейтинга
     useEffect(() => {
         setStars(() => createStars(rating));
     }, []);
 
+    // функция расчета окрашвания заднего фона звезд
     const createStars = (str: string): JSX.Element[] => {
         const stars = [];
         const numArray: RegExpMatchArray | null = str.match(/\d(?:\.\d)?/g);
