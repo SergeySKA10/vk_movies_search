@@ -11,7 +11,6 @@ import './Header.scss';
 export const Header = () => {
     const [activeLink, setActiveLink] = useState<LinkActive>('main');
     const path = usePathname();
-    console.log(path);
 
     useEffect(() => {
         const active = path === '/' ? 'main' : 'favorites';

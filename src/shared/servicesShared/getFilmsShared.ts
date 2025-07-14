@@ -9,10 +9,12 @@ interface Params {
 
 export type GetAllMovies = (params: Params) => Promise<any>;
 export type GetOneMovie = (id: string) => Promise<any>;
+export type GetFilmByName = (value: string) => Promise<any>;
 
 export type GetData = () => {
     getAllMovies: GetAllMovies;
     getMovie: GetOneMovie;
     process: string;
     setProcess: Dispatch<SetStateAction<string>>;
+    getFilmByName: GetFilmByName;
 };

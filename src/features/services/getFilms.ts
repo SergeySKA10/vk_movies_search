@@ -6,10 +6,12 @@ import type {
     GetData,
     GetAllMovies,
     GetOneMovie,
+    GetFilmByName,
 } from '@/shared/servicesShared/getFilmsShared';
 
 const useGetDataFromMoviesSearch: GetData = () => {
     const _apiBaseURL = `https://api.kinopoisk.dev/v1.4/movie`;
+    const _apiSearchByName = `${_apiBaseURL}/search?page=1&limit=10&query=`;
     // const _apiKey = process.env.NEXT_PUBLIC_KINOPOISK_KEY_API;
     const _apiKey = 'XE47S2T-1C3MT41-KFM0CM7-5GZMXEN';
 
@@ -47,7 +49,6 @@ const useGetDataFromMoviesSearch: GetData = () => {
                     'X-API-KEY': `${_apiKey}`,
                 },
             });
-            console.log(data);
             return transformDataMovies(data);
         } catch (e: unknown) {
             if (e instanceof Error) {
@@ -60,7 +61,27 @@ const useGetDataFromMoviesSearch: GetData = () => {
         }
     };
 
-    return { getAllMovies, getMovie, process, setProcess };
+    const getFilmByName: GetFilmByName = async (value: string) => {
+        try {
+            const data = await request({
+                url: `${_apiSearchByName}${value}`,
+                headers: {
+                    'X-API-KEY': `${_apiKey}`,
+                },
+            });
+            return transformDataMovies(data);
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                throw new Error(
+                    `Произошла ошибка при получении данных: ${e.message}`
+                );
+            } else {
+                throw new Error(`Произошла ошибка при получении данных: ${e}`);
+            }
+        }
+    };
+
+    return { getAllMovies, getMovie, process, setProcess, getFilmByName };
 };
 
 export default useGetDataFromMoviesSearch;

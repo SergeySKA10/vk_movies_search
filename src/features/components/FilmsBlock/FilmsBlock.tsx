@@ -6,20 +6,20 @@ import { observer } from 'mobx-react-lite';
 import { useStores } from '@/context/rootStoreContext';
 import { Spinner } from '../ui/Spinner/Spinner';
 import { Error } from '../ui/Error/Error';
-import { useEffect, useState, useRef, type JSX } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import type { IDataTransform } from '@/shared/utilsShared/transformDataShared';
 import './FilmsBlock.scss';
 
 export const FilmsBlock = observer(() => {
-    const refMovies = useRef<HTMLElement | null>(null);
+    const refMovieBlock = useRef<HTMLElement | null>(null);
     const { getAllMovies, process, setProcess } = useGetDataFromMoviesSearch();
-    const [films, setFilms] = useState<JSX.Element | null>(null);
+    const [loadData, setLoadData] = useState<boolean>(false);
     const {
         filter: { activeFilterYear, activeFilterGenre, activeFilterRating },
         favorite,
         favorite: { mergeFavoritesItemsWithLoacalStorage },
         movies,
-        movies: { addInStateMovies, offset, setOffset },
+        movies: { addInStateMovies, offset, setOffset, mvs },
     } = useStores();
 
     if (localStorage && localStorage.getItem('favorites')) {
@@ -37,49 +37,85 @@ export const FilmsBlock = observer(() => {
             rating: activeFilterRating,
         })
             .then((movs) => {
-                setProcess('idle');
-                setFilms(
-                    movs.map((el: IDataTransform) => {
-                        return (
-                            <CardMovie
-                                key={el.id}
-                                id={`${el.id}`}
-                                name={el.name}
-                                src={el.poster}
-                                year={`${el.year}`}
-                                rating={`${el.rating}`}
-                                link={`${el.id}`}
-                            />
-                        );
-                    })
-                );
                 addInStateMovies.apply(movies, [movs]);
                 setOffset.apply(movies);
+            })
+            .then(() => {
+                if (loadData) {
+                    setLoadData(!loadData);
+                }
+                setProcess('idle');
             })
             .catch(() => {
                 setProcess('error');
             });
-    }, [tryAgainLoading]);
+    }, [tryAgainLoading, loadData]);
+
+    const content = useMemo(() => {
+        return () => {
+            return mvs.map((el: IDataTransform) => {
+                return (
+                    <CardMovie
+                        key={el.id}
+                        id={`${el.id}`}
+                        name={el.name}
+                        src={el.poster}
+                        year={`${el.year}`}
+                        rating={`${el.rating}`}
+                        link={`${el.id}`}
+                    />
+                );
+            });
+        };
+    }, [mvs]);
 
     useEffect(() => {
-        if (refMovies) {
-            // refMovies.current
+        const articleMovies = refMovieBlock.current;
+
+        const handleScroll = () => {
+            if (articleMovies) {
+                const { scrollTop, scrollHeight, clientHeight } = articleMovies;
+                if (
+                    scrollTop + clientHeight >= scrollHeight - 20 &&
+                    !loadData
+                ) {
+                    console.log('done');
+                    setLoadData(!loadData);
+                }
+            }
+        };
+
+        if (articleMovies) {
+            articleMovies.addEventListener('scroll', handleScroll);
         }
-    }, []);
+
+        return () => {
+            if (articleMovies) {
+                articleMovies.removeEventListener('scroll', handleScroll);
+            }
+        };
+    }, [mvs]);
 
     return (
         <>
-            {process === 'loading' ? (
+            {process === 'loading' && mvs.length === 0 ? (
                 <Spinner />
-            ) : process === 'error' ? (
+            ) : process === 'error' && mvs.length === 0 ? (
                 <Error
                     setTryAgainLoading={setTryAgainLoading}
                     tryAgainLoading={tryAgainLoading}
                 />
             ) : (
-                <article ref={refMovies} className="filmsBlock">
-                    {films}
-                </article>
+                <>
+                    <article ref={refMovieBlock} className="filmsBlock">
+                        {content()}
+                    </article>
+                    {loadData ? (
+                        <div className="loadData">
+                            <Spinner />
+                        </div>
+                    ) : null}
+                </>
             )}
         </>
     );
