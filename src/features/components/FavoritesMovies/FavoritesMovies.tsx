@@ -13,7 +13,7 @@ export const FavoritesMovies = observer(() => {
     } = useStores();
 
     const content: JSX.Element[] = [];
-    if (localStorage.getItem('favorites')) {
+    if (localStorage && localStorage.getItem('favorites')) {
         const obj = JSON.parse(localStorage.getItem('favorites')!);
         mergeFavoritesItemsWithLoacalStorage.apply(favorite, [obj]);
     }

@@ -22,7 +22,7 @@ export const FilmsBlock = observer(() => {
         movies: { addInStateMovies, offset, setOffset },
     } = useStores();
 
-    if (localStorage.getItem('favorites')) {
+    if (localStorage && localStorage.getItem('favorites')) {
         const obj = JSON.parse(localStorage.getItem('favorites')!);
         mergeFavoritesItemsWithLoacalStorage.apply(favorite, [obj]);
     }
