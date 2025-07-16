@@ -6,12 +6,11 @@ import { observer } from 'mobx-react-lite';
 import { useStores } from '@/context/rootStoreContext';
 import { Spinner } from '../ui/Spinner/Spinner';
 import { Error } from '../ui/Error/Error';
-import { useEffect, useState, useRef, type JSX } from 'react';
+import { useEffect, useState, useCallback, type JSX } from 'react';
 import './FilmsBlock.scss';
 import './FilmBlockMedia.scss';
 
 export const FilmsBlock = observer(() => {
-    const refMovieBlock = useRef<HTMLElement | null>(null);
     const { getAllMovies, process, setProcess } = useGetDataFromMoviesSearch();
     const [loadData, setLoadData] = useState<boolean>(false);
     const {
@@ -22,7 +21,7 @@ export const FilmsBlock = observer(() => {
         movies: { addInStateMovies, offset, setOffset, mvs },
     } = useStores();
 
-    // состяние для повторного запроса в случае ошибки
+    // состяние для повторного запроса
     const [tryAgainLoading, setTryAgainLoading] = useState<boolean>(false);
 
     // получение данных с API, добалениие в глобальное состояние
@@ -34,13 +33,13 @@ export const FilmsBlock = observer(() => {
             rating: activeFilterRating,
         })
             .then((movs) => {
+                if (loadData) {
+                    setLoadData(!loadData);
+                }
                 addInStateMovies.apply(movies, [movs]);
                 setOffset.apply(movies);
             })
             .then(() => {
-                if (loadData) {
-                    setLoadData(!loadData);
-                }
                 setProcess('idle');
             })
             .then(() => {
@@ -53,7 +52,11 @@ export const FilmsBlock = observer(() => {
             .catch(() => {
                 setProcess('error');
             });
-    }, [tryAgainLoading, loadData]);
+    }, [tryAgainLoading]);
+
+    useEffect(() => {
+        setTryAgainLoading(!tryAgainLoading);
+    }, [loadData]);
 
     // формирование контента получаемого из глобального состояния
     const content: JSX.Element[] = [];
@@ -71,34 +74,15 @@ export const FilmsBlock = observer(() => {
         );
     }
 
-    // добавление обработчика события scroll для подгрузки данных - НЕ РЕАЛИЗОВАН до конца
-    useEffect(() => {
-        const articleMovies = refMovieBlock.current;
-
-        const handleScroll = () => {
-            console.log('scroll');
-            if (articleMovies) {
-                const { scrollTop, scrollHeight, clientHeight } = articleMovies;
-                if (
-                    scrollTop + clientHeight >= scrollHeight - 20 &&
-                    !loadData
-                ) {
-                    console.log('done');
+    const handleScroll = useCallback((target: HTMLDivElement) => {
+        if (target) {
+            const { scrollTop, scrollHeight, clientHeight } = target;
+            if (scrollTop + clientHeight >= scrollHeight - 20 && !loadData) {
+                if (!loadData) {
                     setLoadData(!loadData);
                 }
             }
-        };
-
-        // добавление обработчика
-        if (articleMovies) {
-            articleMovies.addEventListener('scroll', handleScroll);
         }
-
-        return () => {
-            if (articleMovies) {
-                articleMovies.removeEventListener('scroll', handleScroll);
-            }
-        };
     }, []);
 
     return (
@@ -114,8 +98,10 @@ export const FilmsBlock = observer(() => {
                 <>
                     <article
                         tabIndex={0}
-                        ref={refMovieBlock}
                         className="filmsBlock"
+                        onScroll={(e) =>
+                            handleScroll(e.target as HTMLDivElement)
+                        }
                     >
                         {content}
                     </article>

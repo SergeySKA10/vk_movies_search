@@ -15,12 +15,14 @@
 
 .loadData {
     z-index: 100;
-    position: absolute;
-    display: flex;
-    align-items: center;
+    opacity: 0.8;
+    background-color: #fff;
     justify-content: end;
-    background-color: #ffffff;
-    opacity: 0.6;
-    top: 0;
-    left: 0;
+    align-items: center;
+    display: flex;
+    position: absolute;
+    top: 50px;
+    right: 150px;
+    width: 1200px;
+    height: 950px;
 }

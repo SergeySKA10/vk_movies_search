@@ -18,6 +18,8 @@ class MoviesStore implements IMovieStore {
 
             this.mvs[value[i].id] = value[i];
         }
+
+        console.log(this.mvs);
     }
 
     // установка отступа для следующего запроса

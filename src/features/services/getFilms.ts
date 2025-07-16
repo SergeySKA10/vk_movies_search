@@ -32,7 +32,6 @@ const useGetDataFromMoviesSearch: GetData = () => {
                     'X-API-KEY': `${_apiKey}`,
                 },
             });
-
             return data.docs.map((el: any) => transformDataMovies(el));
         } catch (e: unknown) {
             if (e instanceof Error) {
