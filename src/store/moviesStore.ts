@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 // import useGetDataFromMoviesSearch from '@/features/services/getFilms';
+import { getDataMoviesInfo } from '@/features/services/getData';
 import type { IDataTransform } from '@/shared/utilsShared/transformDataShared';
 import type { IMovieStore, IMvs } from '@/shared/storeShared/movieStoreShared';
 class MoviesStore implements IMovieStore {
@@ -14,6 +15,7 @@ class MoviesStore implements IMovieStore {
 
     // добавление фильмов в состояние
     addInStateMovies(value: IDataTransform[]) {
+        if (value === null) return;
         for (let i = 0; i < value.length; i++) {
             if (this.mvs[value[i].id]) continue;
 
@@ -21,9 +23,18 @@ class MoviesStore implements IMovieStore {
         }
     }
 
-    // getMoviesFromApi = async () => {
-    //     // const {} = useGetDataFromMoviesSearch();
-    // }
+    getMoviesFromApi = async ({ year, genre, rating }) => {
+        await getDataMoviesInfo({
+            year,
+            genre,
+            page: this.offset,
+            rating,
+        }).then((mov) => {
+            this.addInStateMovies(mov);
+        });
+
+        this.setOffset();
+    };
 
     // установка отступа для следующего запроса
     setOffset() {

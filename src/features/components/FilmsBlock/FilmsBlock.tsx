@@ -18,7 +18,7 @@ export const FilmsBlock = observer(() => {
         favorite,
         favorite: { mergeFavoritesItemsWithLoacalStorage },
         movies,
-        movies: { addInStateMovies, offset, setOffset, mvs },
+        movies: { addInStateMovies, offset, setOffset, mvs, getMoviesFromApi },
     } = useStores();
 
     // состяние для повторного запроса
@@ -26,32 +26,39 @@ export const FilmsBlock = observer(() => {
 
     // получение данных с API, добалениие в глобальное состояние
     useEffect(() => {
-        getAllMovies({
-            page: offset,
-            year: activeFilterYear,
-            genre: activeFilterGenre,
-            rating: activeFilterRating,
-        })
-            .then((movs) => {
-                if (loadData) {
-                    setLoadData(!loadData);
-                }
-                addInStateMovies.apply(movies, [movs]);
-                setOffset.apply(movies);
-            })
-            .then(() => {
-                setProcess('idle');
-            })
-            .then(() => {
-                // проверка данных в localstorage и их merge с глобальным состоянием
-                if (localStorage && localStorage.getItem('favorites')) {
-                    const obj = JSON.parse(localStorage.getItem('favorites')!);
-                    mergeFavoritesItemsWithLoacalStorage.apply(favorite, [obj]);
-                }
-            })
-            .catch(() => {
-                setProcess('error');
-            });
+        // getAllMovies({
+        //     page: offset,
+        //     year: activeFilterYear,
+        //     genre: activeFilterGenre,
+        //     rating: activeFilterRating,
+        // })
+        //     .then((movs) => {
+        //         if (loadData) {
+        //             setLoadData(!loadData);
+        //         }
+        //         addInStateMovies.apply(movies, [movs]);
+        //         setOffset.apply(movies);
+        //     })
+        //     .then(() => {
+        //         setProcess('idle');
+        //     })
+        //     .then(() => {
+        //         // проверка данных в localstorage и их merge с глобальным состоянием
+        //         if (localStorage && localStorage.getItem('favorites')) {
+        //             const obj = JSON.parse(localStorage.getItem('favorites')!);
+        //             mergeFavoritesItemsWithLoacalStorage.apply(favorite, [obj]);
+        //         }
+        //     })
+        //     .catch(() => {
+        //         setProcess('error');
+        //     });
+        getMoviesFromApi.apply(movies, [
+            {
+                year: activeFilterYear,
+                genre: activeFilterGenre,
+                rating: activeFilterRating,
+            },
+        ]);
     }, [
         tryAgainLoading,
         activeFilterYear,

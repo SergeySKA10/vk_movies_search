@@ -37,19 +37,20 @@ export const InputSearch = observer(() => {
 
     // отправка запроса - НЕ Реализована
     useEffect(() => {
-        getFilmByName(debounceValue)
-            .then((data) => {
-                // отчищаем глобальное состояние
-                clearMvs.apply(movies);
-                // добавляем значения
-                addInStateMovies.apply(movies, [data]);
-            })
-            .then(() => {
-                setProcess('idle');
-            })
-            .catch(() => {
-                setProcess('error');
-            });
+        console.log(debounceValue);
+        // getFilmByName(debounceValue)
+        //     .then((data) => {
+        //         // отчищаем глобальное состояние
+        //         clearMvs.apply(movies);
+        //         // добавляем значения
+        //         addInStateMovies.apply(movies, [data]);
+        //     })
+        //     .then(() => {
+        //         setProcess('idle');
+        //     })
+        //     .catch(() => {
+        //         setProcess('error');
+        //     });
     }, [debounceValue]);
 
     return (
