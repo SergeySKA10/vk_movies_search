@@ -44,7 +44,10 @@ export const FiltersBlock = observer(() => {
 
     return (
         <aside className="filterBlock">
-            <nav className="filterBlock__list">{filtersMovie}</nav>
+            <p className="filterBlock__text">Фильтровать по:</p>
+            <div className="filterBlock__nav">
+                <nav className="filterBlock__list">{filtersMovie}</nav>
+            </div>
         </aside>
     );
 });

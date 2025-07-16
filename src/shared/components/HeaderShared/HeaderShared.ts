@@ -5,5 +5,4 @@ interface ILink {
     text: 'Главная страница' | 'Избранное';
 }
 
-export type LinkActive = ILink['name'];
 export type ILinksPages = ILink[];

@@ -119,19 +119,19 @@ export const MovieFilter = observer(({ name, filters }: IMovieFiltersProps) => {
         if (activeFilterYear) {
             filterName = activeFilterYear;
         } else {
-            filterName = 'Фильтровать по году';
+            filterName = 'Году';
         }
     } else if (name === 'genre') {
         if (activeFilterGenre) {
             filterName = activeFilterGenre;
         } else {
-            filterName = 'Фильтровать по жанру';
+            filterName = 'Жанру';
         }
     } else if (name === 'rating') {
         if (activeFilterRating) {
             filterName = activeFilterRating;
         } else {
-            filterName = 'Фильтровать по рейтингу';
+            filterName = 'Рейтингу';
         }
     } else {
         filterName = 'Not found filter';

@@ -1,20 +1,78 @@
-@media (max-width: 1910px) {
+// @media (max-width: 1910px) {
+//     .filmsBlock {
+//         grid-template-columns: repeat(3, 285px);
+//     }
+// }
+
+// @media (max-width: 992px) {
+//     .filmsBlock {
+//         grid-template-rows: repeat(3, 350px);
+//         grid-template-columns: repeat(3, 185px);
+//         grid-auto-rows: 350px;
+//     }
+//     .cardMovie__poster {
+//         height: 185px;
+//     }
+//     .cardMovie {
+//         padding: 10px;
+//     }
+//     .cardMovie__descr {
+//         margin-top: 20px;
+//         gap: 10px;
+//     }
+//     .cardMovie__descr_name {
+//         height: 47px;
+//         font-size: 12px;
+//     }
+//     .cardMovie__descr_year {
+//         font-size: 12px;
+//     }
+//     .cardMovie__descr_rating {
+//         p {
+//             display: none;
+//         }
+//     }
+// }
+
+// @media (max-width: 768px) {
+//     .filmsBlock {
+//         grid-template-rows: repeat(3, 250px);
+//         grid-template-columns: repeat(3, 135px);
+//         grid-auto-rows: 250px;
+//     }
+//     .cardMovie__poster {
+//         height: 125px;
+//     }
+//     .cardMovie__descr {
+//         margin-top: 10px;
+//         gap: 5px;
+//     }
+// }
+
+@media (max-width: 1200px) {
     .filmsBlock {
-        grid-template-columns: repeat(3, 285px);
+        width: 992px;
     }
 }
 
 @media (max-width: 992px) {
     .filmsBlock {
+        width: 768px;
+    }
+}
+
+@media (max-width: 768px) {
+    .filmsBlock {
+        width: 576px;
         grid-template-rows: repeat(3, 350px);
-        grid-template-columns: repeat(3, 185px);
         grid-auto-rows: 350px;
+        gap: 10px;
     }
     .cardMovie__poster {
         height: 185px;
     }
     .cardMovie {
-        padding: 10px;
+        padding: 20px;
     }
     .cardMovie__descr {
         margin-top: 20px;
@@ -29,22 +87,7 @@
     }
     .cardMovie__descr_rating {
         p {
-            display: none;
+            font-size: 12px;
         }
-    }
-}
-
-@media (max-width: 768px) {
-    .filmsBlock {
-        grid-template-rows: repeat(3, 250px);
-        grid-template-columns: repeat(3, 135px);
-        grid-auto-rows: 250px;
-    }
-    .cardMovie__poster {
-        height: 125px;
-    }
-    .cardMovie__descr {
-        margin-top: 10px;
-        gap: 5px;
     }
 }

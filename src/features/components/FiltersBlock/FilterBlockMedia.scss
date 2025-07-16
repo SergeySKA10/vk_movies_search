@@ -1,43 +1,71 @@
+// @media (max-width: 1620px) {
+//     .filterBlock {
+//         width: 100%;
+//         display: flex;
+//         justify-content: center;
+//     }
+//     .filterBlock__list {
+//         flex-direction: row;
+//     }
+//     .selectFilm {
+//         width: 250px;
+//         height: 27px;
+//     }
+//     .selectFilm__filter {
+//         font-size: 16px;
+//     }
+// }
+
+// @media (max-width: 1100px) {
+//     .selectFilm {
+//         width: 200px;
+//         height: 25px;
+//     }
+//     .selectFilm__filter {
+//         font-size: 13px;
+//     }
+// }
+
+// @media (max-width: 768px) {
+//     .filterBlock__list {
+//         gap: 5px;
+//     }
+//     .selectFilm {
+//         width: 150px;
+//         height: 20px;
+//     }
+//     .selectFilm__filter {
+//         font-size: 10px;
+//         span {
+//             display: none;
+//         }
+//     }
+// }
+
 @media (max-width: 1620px) {
     .filterBlock {
-        width: 100%;
-        display: flex;
-        justify-content: center;
+        width: 1200px;
     }
     .filterBlock__list {
         flex-direction: row;
-    }
-    .selectFilm {
-        width: 250px;
-        height: 27px;
-    }
-    .selectFilm__filter {
-        font-size: 16px;
+        justify-content: center;
     }
 }
 
-@media (max-width: 1100px) {
-    .selectFilm {
-        width: 200px;
-        height: 25px;
+@media (max-width: 1200px) {
+    .filterBlock {
+        width: 992px;
     }
-    .selectFilm__filter {
-        font-size: 13px;
+}
+
+@media (max-width: 992px) {
+    .filterBlock {
+        width: 768px;
     }
 }
 
 @media (max-width: 768px) {
-    .filterBlock__list {
-        gap: 5px;
-    }
-    .selectFilm {
-        width: 150px;
-        height: 20px;
-    }
-    .selectFilm__filter {
-        font-size: 10px;
-        span {
-            display: none;
-        }
+    .filterBlock {
+        width: 576px;
     }
 }

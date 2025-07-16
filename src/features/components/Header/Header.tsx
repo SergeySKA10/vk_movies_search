@@ -1,22 +1,25 @@
 'use client';
+
+import { useStores } from '@/context/rootStoreContext';
+import { observer } from 'mobx-react-lite';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { LinkPage } from '../ui/LinkPage/LinkPage';
-import type {
-    ILinksPages,
-    LinkActive,
-} from '@/shared/components/HeaderShared/HeaderShared';
+import type { ILinksPages } from '@/shared/components/HeaderShared/HeaderShared';
 import './Header.scss';
 
-export const Header = () => {
-    const [activeLink, setActiveLink] = useState<LinkActive | ''>('main');
+export const Header = observer(() => {
     const path = usePathname();
+    const {
+        pageState,
+        pageState: { activePage, setActivePage },
+    } = useStores();
 
     // получение состояния активной ссылки
     useEffect(() => {
         const active =
             path === '/' ? 'main' : path === '/favorites' ? 'favorites' : '';
-        setActiveLink(active);
+        setActivePage.apply(pageState, [active]);
     }, []);
 
     // объект с существующими сылками
@@ -36,9 +39,12 @@ export const Header = () => {
     ];
 
     const links = linksPages.map((link) => {
-        const activeClass = activeLink === link.name ? 'activeLinkPage' : '';
+        const activeClass = activePage === link.name ? 'activeLinkPage' : '';
         return (
-            <li key={link.id} onClick={() => setActiveLink(link.name)}>
+            <li
+                key={link.id}
+                onClick={() => setActivePage.apply(pageState, [link.name])}
+            >
                 <LinkPage
                     link={link.link}
                     text={link.text}
@@ -53,4 +59,4 @@ export const Header = () => {
             <ul className="header__menu">{links}</ul>
         </header>
     );
-};
+});

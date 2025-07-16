@@ -1,15 +1,27 @@
 'use client';
 
+import { useStores } from '@/context/rootStoreContext';
+import { observer } from 'mobx-react-lite';
 import Image from 'next/image';
 import { RatingStars } from '../ui/RatingStars/RatingStars';
 import useGetDataFromMoviesSearch from '@/features/services/getFilms';
 import { useEffect, useState, type JSX } from 'react';
 import type { IDataTransform } from '@/shared/utilsShared/transformDataShared';
 import './Movie.scss';
+import './MovieMedia.scss';
 
-export const Movie = ({ id }: { id?: string }) => {
+export const Movie = observer(({ id }: { id?: string }) => {
     const { getMovie } = useGetDataFromMoviesSearch();
     const [content, setContent] = useState<JSX.Element | null>(null);
+    const {
+        pageState,
+        pageState: { setActivePage },
+    } = useStores();
+
+    // убираем активный класс ссылки в компоненте Header
+    useEffect(() => {
+        setActivePage.apply(pageState, ['']);
+    }, []);
 
     // запрос и формирование контента для сраницы с подробным описание фильма
     useEffect(() => {
@@ -58,4 +70,4 @@ export const Movie = ({ id }: { id?: string }) => {
     }, []);
 
     return <>{content ? content : <p>Loading...</p>}</>;
-};
+});

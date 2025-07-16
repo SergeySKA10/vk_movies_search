@@ -1,13 +1,16 @@
 .filmsBlock {
+    border: 1px solid $decor_color;
+    padding: 20px;
+    height: 950px;
+    width: 1200px;
     border-radius: 10px;
-    border: none;
+    justify-content: center;
     display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(135px, 250px));
     grid-template-rows: repeat(3, 450px);
-    grid-template-columns: repeat(4, 285px);
     grid-auto-rows: 450px;
     gap: 20px;
-    overflow: scroll;
-    height: 950px;
+    overflow-y: scroll;
 }
 
 .loadData {
