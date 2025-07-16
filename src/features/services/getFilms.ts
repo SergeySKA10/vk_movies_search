@@ -20,6 +20,7 @@ const useGetDataFromMoviesSearch: GetData = () => {
 
     // функция получения всех фильмов
     const getAllMovies: GetAllMovies = async (params) => {
+        console.log('req');
         const { page, year, rating, genre } = params;
         const filterYears = year ? `&year=${year}` : '';
         const filterRating = rating ? `rating.imdb=${rating}` : '';

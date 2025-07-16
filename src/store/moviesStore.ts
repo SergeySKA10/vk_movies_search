@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx';
+// import useGetDataFromMoviesSearch from '@/features/services/getFilms';
 import type { IDataTransform } from '@/shared/utilsShared/transformDataShared';
 import type { IMovieStore, IMvs } from '@/shared/storeShared/movieStoreShared';
 class MoviesStore implements IMovieStore {
@@ -18,9 +19,11 @@ class MoviesStore implements IMovieStore {
 
             this.mvs[value[i].id] = value[i];
         }
-
-        console.log(this.mvs);
     }
+
+    // getMoviesFromApi = async () => {
+    //     // const {} = useGetDataFromMoviesSearch();
+    // }
 
     // установка отступа для следующего запроса
     setOffset() {

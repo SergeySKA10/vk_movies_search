@@ -13,6 +13,8 @@ export const MovieFilter = observer(({ name, filters }: IMovieFiltersProps) => {
     const { replace } = useRouter();
     const ref = useRef<HTMLDivElement>(null);
     const {
+        movies,
+        movies: { clearMvs },
         filter,
         filter: {
             setActiveFilterYear,
@@ -52,7 +54,6 @@ export const MovieFilter = observer(({ name, filters }: IMovieFiltersProps) => {
 
     // обновление глобального состояния фильтров
     const updateFilter = (value: string, id: string) => {
-        console.log(value, id);
         if (value && id) {
             switch (id) {
                 case 'year':

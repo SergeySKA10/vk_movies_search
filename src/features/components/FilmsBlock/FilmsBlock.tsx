@@ -52,7 +52,12 @@ export const FilmsBlock = observer(() => {
             .catch(() => {
                 setProcess('error');
             });
-    }, [tryAgainLoading]);
+    }, [
+        tryAgainLoading,
+        activeFilterYear,
+        activeFilterGenre,
+        activeFilterRating,
+    ]);
 
     useEffect(() => {
         setTryAgainLoading(!tryAgainLoading);
