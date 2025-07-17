@@ -20,7 +20,9 @@ export const getDataMoviesInfo = async ({ page, year, rating, genre }) => {
                 `Could not fetch ${url}, status: ${response.status}`
             );
         }
+        console.log('complite get data');
         const result = await response.json();
+        console.log('complite format json');
         return result.docs.map((el: any) => transformDataMovies(el));
     } catch (error) {
         if (error instanceof Error) {

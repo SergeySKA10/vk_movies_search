@@ -52,6 +52,7 @@ export const FilmsBlock = observer(() => {
         //     .catch(() => {
         //         setProcess('error');
         //     });
+        console.log('use effect load data');
         getMoviesFromApi.apply(movies, [
             {
                 year: activeFilterYear,
@@ -60,7 +61,7 @@ export const FilmsBlock = observer(() => {
             },
         ]);
     }, [
-        tryAgainLoading,
+        // tryAgainLoading,
         activeFilterYear,
         activeFilterGenre,
         activeFilterRating,
@@ -72,19 +73,22 @@ export const FilmsBlock = observer(() => {
 
     // формирование контента получаемого из глобального состояния
     const content: JSX.Element[] = [];
-    for (const key in mvs) {
-        content.push(
-            <CardMovie
-                key={mvs[key].id}
-                id={`${mvs[key].id}`}
-                name={mvs[key].name}
-                src={mvs[key].poster}
-                year={`${mvs[key].year}`}
-                rating={`${mvs[key].rating}`}
-                link={`${mvs[key].id}`}
-            />
-        );
+    for (let i = 0; i < mvs.length; i++) {
+        for (const key in mvs[i]) {
+            content.push(
+                <CardMovie
+                    key={mvs[i][key].id}
+                    id={`${mvs[i][key].id}`}
+                    name={mvs[i][key].name}
+                    src={mvs[i][key].poster}
+                    year={`${mvs[i][key].year}`}
+                    rating={`${mvs[i][key].rating}`}
+                    link={`${mvs[i][key].id}`}
+                />
+            );
+        }
     }
+    console.log('content - ', content);
 
     const handleScroll = useCallback((target: HTMLDivElement) => {
         if (target) {
@@ -96,6 +100,17 @@ export const FilmsBlock = observer(() => {
             }
         }
     }, []);
+
+    useEffect(() => {
+        console.log('update data');
+        getMoviesFromApi.apply(movies, [
+            {
+                year: activeFilterYear,
+                genre: activeFilterGenre,
+                rating: activeFilterRating,
+            },
+        ]);
+    }, [loadData]);
 
     return (
         <>
@@ -117,11 +132,11 @@ export const FilmsBlock = observer(() => {
                     >
                         {content}
                     </article>
-                    {loadData ? (
+                    {/* {loadData ? (
                         <div className="loadData">
                             <Spinner />
                         </div>
-                    ) : null}
+                    ) : null} */}
                 </>
             )}
         </>

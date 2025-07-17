@@ -54,6 +54,7 @@ export const MovieFilter = observer(({ name, filters }: IMovieFiltersProps) => {
 
     // обновление глобального состояния фильтров
     const updateFilter = (value: string, id: string) => {
+        clearMvs.apply(movies);
         if (value && id) {
             switch (id) {
                 case 'year':

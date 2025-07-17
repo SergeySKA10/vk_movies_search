@@ -5,7 +5,7 @@ export interface IMvs {
 }
 
 export interface IMovieStore {
-    mvs: IMvs;
+    mvs: IMvs[];
     offset: number;
     addInStateMovies: (value: IDataTransform[]) => void;
     setOffset: () => void;
