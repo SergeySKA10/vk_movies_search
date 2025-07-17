@@ -1,7 +1,6 @@
 'use client';
 
 import { CardMovie } from '../ui/CardMovie/CardMovie';
-import useGetDataFromMoviesSearch from '@/features/services/getFilms';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '@/context/rootStoreContext';
 import { Spinner } from '../ui/Spinner/Spinner';
@@ -11,48 +10,28 @@ import './FilmsBlock.scss';
 import './FilmBlockMedia.scss';
 
 export const FilmsBlock = observer(() => {
-    const { getAllMovies, process, setProcess } = useGetDataFromMoviesSearch();
+    // const { getAllMovies, process, setProcess } = useGetDataFromMoviesSearch();
     const [loadData, setLoadData] = useState<boolean>(false);
     const {
         filter: { activeFilterYear, activeFilterGenre, activeFilterRating },
         favorite,
         favorite: { mergeFavoritesItemsWithLoacalStorage },
         movies,
-        movies: { addInStateMovies, offset, setOffset, mvs, getMoviesFromApi },
+        movies: { mvs, getMoviesFromApi, process },
     } = useStores();
 
     // состяние для повторного запроса
     const [tryAgainLoading, setTryAgainLoading] = useState<boolean>(false);
 
+    // сопоставление данных localstorage с глобальным состоянием
+    // if (localStorage && localStorage.getItem('favorites')) {
+    //     const obj = JSON.parse(localStorage.getItem('favorites')!);
+    //     mergeFavoritesItemsWithLoacalStorage.apply(favorite, [obj]);
+    // }
+
     // получение данных с API, добалениие в глобальное состояние
     useEffect(() => {
-        // getAllMovies({
-        //     page: offset,
-        //     year: activeFilterYear,
-        //     genre: activeFilterGenre,
-        //     rating: activeFilterRating,
-        // })
-        //     .then((movs) => {
-        //         if (loadData) {
-        //             setLoadData(!loadData);
-        //         }
-        //         addInStateMovies.apply(movies, [movs]);
-        //         setOffset.apply(movies);
-        //     })
-        //     .then(() => {
-        //         setProcess('idle');
-        //     })
-        //     .then(() => {
-        //         // проверка данных в localstorage и их merge с глобальным состоянием
-        //         if (localStorage && localStorage.getItem('favorites')) {
-        //             const obj = JSON.parse(localStorage.getItem('favorites')!);
-        //             mergeFavoritesItemsWithLoacalStorage.apply(favorite, [obj]);
-        //         }
-        //     })
-        //     .catch(() => {
-        //         setProcess('error');
-        //     });
-        console.log('use effect load data');
+        // console.log('use effect load data');
         getMoviesFromApi.apply(movies, [
             {
                 year: activeFilterYear,
@@ -88,21 +67,18 @@ export const FilmsBlock = observer(() => {
             );
         }
     }
-    console.log('content - ', content);
+    // console.log('content - ', content);
 
     const handleScroll = useCallback((target: HTMLDivElement) => {
         if (target) {
             const { scrollTop, scrollHeight, clientHeight } = target;
             if (scrollTop + clientHeight >= scrollHeight - 20 && !loadData) {
-                if (!loadData) {
-                    setLoadData(!loadData);
-                }
+                setLoadData(true);
             }
         }
     }, []);
 
     useEffect(() => {
-        console.log('update data');
         getMoviesFromApi.apply(movies, [
             {
                 year: activeFilterYear,
@@ -114,9 +90,9 @@ export const FilmsBlock = observer(() => {
 
     return (
         <>
-            {process === 'loading' && Object.keys(mvs).length === 0 ? (
+            {process === 'loading' && !loadData ? (
                 <Spinner />
-            ) : process === 'error' && Object.keys(mvs).length === 0 ? (
+            ) : process === 'error' ? (
                 <Error
                     setTryAgainLoading={setTryAgainLoading}
                     tryAgainLoading={tryAgainLoading}

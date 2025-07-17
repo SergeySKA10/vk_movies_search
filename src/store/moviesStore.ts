@@ -2,16 +2,22 @@ import { makeAutoObservable, runInAction } from 'mobx';
 // import useGetDataFromMoviesSearch from '@/features/services/getFilms';
 import { getDataMoviesInfo } from '@/features/services/getData';
 import type { IDataTransform } from '@/shared/utilsShared/transformDataShared';
-import type { IMovieStore, IMvs } from '@/shared/storeShared/movieStoreShared';
+import type {
+    IMovieStore,
+    IMvs,
+    ISearchParamsMovies,
+} from '@/shared/storeShared/movieStoreShared';
 class MoviesStore implements IMovieStore {
     mvs: IMvs[];
     offset: number;
     length: number;
+    process: IMovieStore['process'];
 
     constructor() {
         this.mvs = [];
         this.offset = 1;
         this.length = 0;
+        this.process = 'idle';
         makeAutoObservable(this);
     }
 
@@ -32,24 +38,35 @@ class MoviesStore implements IMovieStore {
             this.setLength();
         }
 
-        console.log('mvs - ', this.mvs);
+        // console.log('mvs - ', this.mvs);
     }
 
-    getMoviesFromApi = async ({ year, genre, rating }) => {
-        console.log(
-            'request data',
-            ` params: year: ${year} genre: ${genre} rating: ${rating}`
-        );
+    getMoviesFromApi = async ({ year, genre, rating }: ISearchParamsMovies) => {
+        // console.log(
+        //     'request data',
+        //     ` params: year: ${year} genre: ${genre} rating: ${rating}`
+        // );
 
-        await getDataMoviesInfo({
+        this.setProcess('loading');
+
+        const { getAllFilms } = getDataMoviesInfo();
+
+        await getAllFilms({
             year,
             genre,
             page: this.offset,
             rating,
-        }).then((mov) => {
-            console.log('update data', mov);
-            this.addInStateMovies(mov);
-        });
+        })
+            .then((mov) => {
+                console.log('update data', mov);
+                this.addInStateMovies(mov);
+            })
+            .then(() => {
+                this.setProcess('idle');
+            })
+            .catch(() => {
+                this.setProcess('error');
+            });
 
         runInAction(() => {
             this.setOffset();
@@ -64,6 +81,11 @@ class MoviesStore implements IMovieStore {
     // установка отступа для следующего запроса
     setOffset() {
         this.offset += 1;
+    }
+
+    // установка процесса загрузки данных
+    setProcess(value: IMovieStore['process']) {
+        this.process = value;
     }
 
     // отчиска состояния фильмов
