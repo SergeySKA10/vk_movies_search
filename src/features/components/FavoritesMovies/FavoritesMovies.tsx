@@ -3,8 +3,10 @@
 import { observer } from 'mobx-react-lite';
 import { useStores } from '@/context/rootStoreContext';
 import { CardMovie } from '../ui/CardMovie/CardMovie';
-import type { JSX } from 'react';
+import { useEffect, type JSX } from 'react';
 import './FavoritesMovies.scss';
+import '../FilmsBlock/FilmsBlock.scss';
+import '../FilmsBlock/FilmBlockMedia.scss';
 
 export const FavoritesMovies = observer(() => {
     const {
@@ -14,11 +16,14 @@ export const FavoritesMovies = observer(() => {
 
     const content: JSX.Element[] = [];
 
-    // получение данных из localstorage и их merge c глобальным состоянием
-    if (localStorage && localStorage.getItem('favorites')) {
-        const obj = JSON.parse(localStorage.getItem('favorites')!);
-        mergeFavoritesItemsWithLoacalStorage.apply(favorite, [obj]);
-    }
+    // работа с localstorage
+    useEffect(() => {
+        // получение данных из localstorage и их merge c глобальным состоянием
+        if (localStorage.getItem('favorites')) {
+            const obj = JSON.parse(localStorage.getItem('favorites')!);
+            mergeFavoritesItemsWithLoacalStorage.apply(favorite, [obj]);
+        }
+    });
 
     // формирование контента избранных фильмов
     for (const key in favoritesItems) {

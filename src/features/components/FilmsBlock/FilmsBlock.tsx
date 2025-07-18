@@ -22,11 +22,14 @@ export const FilmsBlock = observer(() => {
     // состяние для повторного запроса
     const [tryAgainLoading, setTryAgainLoading] = useState<boolean>(false);
 
-    // сопоставление данных localstorage с глобальным состоянием
-    if (localStorage && localStorage.getItem('favorites')) {
-        const obj = JSON.parse(localStorage.getItem('favorites')!);
-        mergeFavoritesItemsWithLoacalStorage.apply(favorite, [obj]);
-    }
+    // работа с localstorage
+    useEffect(() => {
+        // сопоставление данных localstorage с глобальным состоянием
+        if (localStorage.getItem('favorites')) {
+            const obj = JSON.parse(localStorage.getItem('favorites')!);
+            mergeFavoritesItemsWithLoacalStorage.apply(favorite, [obj]);
+        }
+    }, []);
 
     // получение данных с API, добалениие в глобальное состояние
     useEffect(() => {
