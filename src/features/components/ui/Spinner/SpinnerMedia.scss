@@ -1,0 +1,29 @@
+@media (max-width: 1200px) {
+    .spinner {
+        width: 992px;
+    }
+}
+
+@media (max-width: 992px) {
+    .spinner {
+        width: 768px;
+    }
+}
+
+@media (max-width: 768px) {
+    .spinner {
+        width: 576px;
+    }
+}
+
+@media (max-width: 576px) {
+    .spinner {
+        width: 375px;
+    }
+}
+
+@media (max-width: 375px) {
+    .spinner {
+        width: 300px;
+    }
+}

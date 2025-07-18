@@ -1,6 +1,7 @@
 @media (max-width: 1620px) {
     .wrapperFilms {
         flex-direction: column;
+        justify-content: flex-start;
         align-items: center;
         padding: 30px 100px;
     }

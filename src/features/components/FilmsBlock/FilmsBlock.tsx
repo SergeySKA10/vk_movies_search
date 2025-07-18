@@ -16,7 +16,7 @@ export const FilmsBlock = observer(() => {
         favorite,
         favorite: { mergeFavoritesItemsWithLoacalStorage },
         movies,
-        movies: { mvs, getMoviesFromApi, process },
+        movies: { mvs, getMoviesFromApi, process, setOffsetByError },
     } = useStores();
 
     // состяние для повторного запроса
@@ -30,19 +30,18 @@ export const FilmsBlock = observer(() => {
 
     // получение данных с API, добалениие в глобальное состояние
     useEffect(() => {
-        getMoviesFromApi.apply(movies, [
-            {
-                year: activeFilterYear,
-                genre: activeFilterGenre,
-                rating: activeFilterRating,
-            },
-        ]);
-    }, [
-        // tryAgainLoading,
-        activeFilterYear,
-        activeFilterGenre,
-        activeFilterRating,
-    ]);
+        getMoviesFromApi
+            .apply(movies, [
+                {
+                    year: activeFilterYear,
+                    genre: activeFilterGenre,
+                    rating: activeFilterRating,
+                },
+            ])
+            .catch(() => {
+                setOffsetByError.apply(movies);
+            });
+    }, [activeFilterYear, activeFilterGenre, activeFilterRating]);
 
     useEffect(() => {
         setTryAgainLoading(!tryAgainLoading);
@@ -94,10 +93,7 @@ export const FilmsBlock = observer(() => {
             {process === 'loading' && mvs.length === 0 ? (
                 <Spinner />
             ) : process === 'error' ? (
-                <Error
-                    setTryAgainLoading={setTryAgainLoading}
-                    tryAgainLoading={tryAgainLoading}
-                />
+                <Error setTryAgainLoading={setLoadData} />
             ) : (
                 <>
                     <article
@@ -109,7 +105,7 @@ export const FilmsBlock = observer(() => {
                     >
                         {content}
                     </article>
-                    {loadData ? (
+                    {process === 'loading' && mvs.length > 0 ? (
                         <div className="loadData">
                             <Spinner />
                         </div>

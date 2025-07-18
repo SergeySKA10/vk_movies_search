@@ -13,7 +13,7 @@ export const getDataMoviesInfo: GetData = () => {
 
     const getAllFilms: GetAllFilms = async ({ page, year, rating, genre }) => {
         const filterYears = year ? `&year=${year}` : '';
-        const filterRating = rating ? `rating.imdb=${rating}` : '';
+        const filterRating = rating ? `&rating.imdb=${rating}` : '';
         const filterGenre = genre ? `&genres.name=${genre}` : '';
         const url = `${_apiBaseURL}?page=${page}&limit=50&type=movie${filterYears}${filterRating}${filterGenre}`;
         try {

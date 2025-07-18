@@ -3,3 +3,14 @@
         font-size: 60px;
     }
 }
+
+@media (max-width: 576px) {
+    .promo {
+        min-height: 250px;
+        gap: 30px;
+    }
+    .promo__header {
+        font-size: 50px;
+        letter-spacing: 2px;
+    }
+}

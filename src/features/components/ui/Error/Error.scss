@@ -1,0 +1,32 @@
+.errorMessage {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    width: 1000px;
+    margin: 10px auto;
+    text-align: center;
+    &__descr {
+        color: $danger_color;
+        font-size: 16px;
+        font-weight: 400;
+    }
+    &__btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 150px;
+        height: 48px;
+        box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+        border: none;
+        background-color: $danger_color;
+        color: #ffffff;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: 300;
+        cursor: pointer;
+        &:hover {
+            transform: scale(0.98);
+        }
+    }
+}

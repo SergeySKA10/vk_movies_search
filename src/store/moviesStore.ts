@@ -63,7 +63,8 @@ class MoviesStore implements IMovieStore {
                 this.setProcess('idle');
             })
             .catch(() => {
-                this.setProcess('error');
+                this.setProcess('loading');
+                throw new Error('Ошибка при запросе данных');
             });
 
         runInAction(() => {
@@ -106,6 +107,11 @@ class MoviesStore implements IMovieStore {
     // установка отступа для следующего запроса
     setOffset() {
         this.offset += 1;
+    }
+
+    // отмена отступов для запроса при ошибке
+    setOffsetByError() {
+        this.offset = 1;
     }
 
     // установка процесса загрузки данных

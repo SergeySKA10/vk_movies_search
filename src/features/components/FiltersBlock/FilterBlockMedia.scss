@@ -69,3 +69,12 @@
         width: 576px;
     }
 }
+
+@media (max-width: 576px) {
+    .filterBlock {
+        width: 375px;
+    }
+    .filterBlock__list {
+        flex-direction: column;
+    }
+}
