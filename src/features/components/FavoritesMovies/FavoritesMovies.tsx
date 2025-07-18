@@ -38,7 +38,11 @@ export const FavoritesMovies = observer(() => {
 
     return (
         <section className="favorites">
-            <article className="filmsBlock">{content}</article>
+            <article className="filmsBlock">
+                {content.length === 0
+                    ? 'В избранном пока нет фильмов'
+                    : content}
+            </article>
         </section>
     );
 });

@@ -1,14 +1,10 @@
 import Image from 'next/image';
+import './Spinner.scss';
+import './SpinnerMedia.scss';
+
 export const Spinner = () => {
     return (
-        <div
-            style={{
-                display: 'flex',
-                width: '1000px',
-                justifyContent: 'center',
-                margin: '10px auto',
-            }}
-        >
+        <div className="spinner">
             <Image
                 src={'/spinner/spinner.svg'}
                 alt="spinner"

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Movie } from '@/features/components/Movie/Movie';
 import './MoviePage.scss';
+import './MoviePageMedia.scss';
 
 export const metadata: Metadata = {
     title: 'Страница фильма',

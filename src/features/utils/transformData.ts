@@ -14,10 +14,10 @@ export const transformDataMovies = (data: any): IDataTransform => {
             ? data.description
             : 'Описание отсутствует',
         genres:
-            data.genres.length !== 0
+            Array.isArray(data.genres) && data.genres.length !== 0
                 ? data.genres.map((el) => el.name!)
                 : ['Описание жанров отсутствует'],
-        rating: data.rating.imdb,
+        rating: data.rating ? (data.rating.imdb ? data.rating.imdb : '0') : '0',
         year: data.year,
     };
 };

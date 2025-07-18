@@ -2,16 +2,21 @@
 
 import { useStores } from '@/context/rootStoreContext';
 import { observer } from 'mobx-react-lite';
-import useGetDataFromMoviesSearch from '@/features/services/getFilms';
 import { useEffect, useState } from 'react';
 import type { ChangeEvent } from 'react';
 import './InputSearch.scss';
 
 export const InputSearch = observer(() => {
-    const { getFilmByName, setProcess } = useGetDataFromMoviesSearch();
     const {
+        filter: { activeFilterYear, activeFilterGenre, activeFilterRating },
         movies,
-        movies: { clearMvs, addInStateMovies },
+        movies: {
+            clearMvs,
+            getMovieByNameFromApi,
+            searchByName,
+            setSearchByName,
+            getMoviesFromApi,
+        },
     } = useStores();
 
     // создание состояния для получения значения из инпута
@@ -21,6 +26,7 @@ export const InputSearch = observer(() => {
 
     // функция обработки события и обновления состояния
     const onHandleInput = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearchByName.apply(movies, ['byName']);
         setInputValue(e.target.value);
     };
 
@@ -37,19 +43,24 @@ export const InputSearch = observer(() => {
 
     // отправка запроса - НЕ Реализована
     useEffect(() => {
-        getFilmByName(debounceValue)
-            .then((data) => {
-                // отчищаем глобальное состояние
-                clearMvs.apply(movies);
-                // добавляем значения
-                addInStateMovies.apply(movies, [data]);
-            })
-            .then(() => {
-                setProcess('idle');
-            })
-            .catch(() => {
-                setProcess('error');
-            });
+        if (debounceValue === '' && searchByName === 'byName') {
+            clearMvs.apply(movies);
+            setSearchByName.apply(movies, ['byAll']);
+            getMoviesFromApi.apply(movies, [
+                {
+                    year: activeFilterYear,
+                    genre: activeFilterGenre,
+                    rating: activeFilterRating,
+                },
+            ]);
+        }
+
+        if (debounceValue === '') {
+            return;
+        }
+
+        clearMvs.apply(movies);
+        getMovieByNameFromApi.apply(movies, [debounceValue]);
     }, [debounceValue]);
 
     return (

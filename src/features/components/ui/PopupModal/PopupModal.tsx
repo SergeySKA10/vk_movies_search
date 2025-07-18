@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { Button } from '../Button/Button';
 import type { ICardMovieProps } from '@/shared/components/CardMovieShared/cardMovieShared';
 import './PopupModal.scss';
+import './PopupMedia.scss';
 
 export const PopupModal = observer(() => {
     const {

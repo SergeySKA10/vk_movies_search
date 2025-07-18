@@ -1,6 +1,7 @@
 import { InputField } from '../InputField/InputField';
 import type { IPromoProps } from '@/shared/components/PromoShared/promoShared';
 import './Promo.scss';
+import './PromoMedia.scss';
 
 export const Promo = ({ text }: IPromoProps) => {
     return (

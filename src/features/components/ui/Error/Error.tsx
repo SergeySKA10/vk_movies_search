@@ -1,41 +1,22 @@
 'use client';
 import type { IErrorProps } from '@/shared/components/ErrorShared/errorShared';
+import './Error.scss';
+import './ErrorMedia.scss';
 
 export const Error = ({ setTryAgainLoading, tryAgainLoading }: IErrorProps) => {
     return (
-        <div
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '15px',
-                alignItems: 'center',
-                width: '1000px',
-                margin: '10px auto',
-                textAlign: 'center',
-            }}
-        >
-            <p
-                tabIndex={0}
-                style={{ color: 'red', fontSize: '16px', fontWeight: 400 }}
-            >
+        <div className="errorMessage">
+            <p tabIndex={0} className="errorMessage__descr">
                 Произошла ошибка при запросе данных
             </p>
             <button
                 tabIndex={0}
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '150px',
-                    height: '48px',
-                    border: '1px solid black',
-                    backgroundColor: '#bdbfbe',
-                    borderRadius: '5px',
-                    fontSize: '14px',
-                    fontWeight: '300',
-                    cursor: 'pointer',
-                }}
-                onClick={() => setTryAgainLoading(!tryAgainLoading)}
+                className="errorMessage__btn"
+                onClick={() =>
+                    setTryAgainLoading(
+                        tryAgainLoading ? !tryAgainLoading : true
+                    )
+                }
             >
                 Попробовать снова
             </button>

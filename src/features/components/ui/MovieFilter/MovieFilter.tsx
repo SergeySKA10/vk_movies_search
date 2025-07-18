@@ -13,6 +13,8 @@ export const MovieFilter = observer(({ name, filters }: IMovieFiltersProps) => {
     const { replace } = useRouter();
     const ref = useRef<HTMLDivElement>(null);
     const {
+        movies,
+        movies: { clearMvs },
         filter,
         filter: {
             setActiveFilterYear,
@@ -52,7 +54,7 @@ export const MovieFilter = observer(({ name, filters }: IMovieFiltersProps) => {
 
     // обновление глобального состояния фильтров
     const updateFilter = (value: string, id: string) => {
-        console.log(value, id);
+        clearMvs.apply(movies);
         if (value && id) {
             switch (id) {
                 case 'year':
@@ -119,19 +121,19 @@ export const MovieFilter = observer(({ name, filters }: IMovieFiltersProps) => {
         if (activeFilterYear) {
             filterName = activeFilterYear;
         } else {
-            filterName = 'Фильтровать по году';
+            filterName = 'Году';
         }
     } else if (name === 'genre') {
         if (activeFilterGenre) {
             filterName = activeFilterGenre;
         } else {
-            filterName = 'Фильтровать по жанру';
+            filterName = 'Жанру';
         }
     } else if (name === 'rating') {
         if (activeFilterRating) {
             filterName = activeFilterRating;
         } else {
-            filterName = 'Фильтровать по рейтингу';
+            filterName = 'Рейтингу';
         }
     } else {
         filterName = 'Not found filter';
