@@ -29,9 +29,7 @@ export const getDataMoviesInfo: GetData = () => {
                     `Could not fetch ${url}, status: ${response.status}`
                 );
             }
-            // console.log('complite get data');
             const result = await response.json();
-            // console.log('complite format json');
             return result.docs.map((el: any) => transformDataMovies(el));
         } catch (error) {
             if (error instanceof Error) {
@@ -81,7 +79,7 @@ export const getDataMoviesInfo: GetData = () => {
 
             const result = await response.json();
             console.log(result);
-            return transformDataMovies(result);
+            return result.docs.map((el: any) => transformDataMovies(el));
         } catch (e: unknown) {
             if (e instanceof Error) {
                 throw new Error(

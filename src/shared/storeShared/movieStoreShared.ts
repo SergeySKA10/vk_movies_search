@@ -10,12 +10,15 @@ export interface IMvs {
 }
 
 type Process = 'idle' | 'loading' | 'error';
+type Search = 'byAll' | 'byName';
 
 export interface IMovieStore {
     mvs: IMvs[];
     offset: number;
     length: number;
     process: Process;
+    searchByName: Search;
+    setSearchByName: (value: Search) => void;
     addInStateMovies: (value: IDataTransform[]) => void;
     getMoviesFromApi: (params: ISearchParamsMovies) => Promise<void>;
     setOffset: () => void;

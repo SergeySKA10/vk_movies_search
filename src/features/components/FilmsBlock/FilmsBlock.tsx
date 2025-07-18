@@ -10,7 +10,6 @@ import './FilmsBlock.scss';
 import './FilmBlockMedia.scss';
 
 export const FilmsBlock = observer(() => {
-    // const { getAllMovies, process, setProcess } = useGetDataFromMoviesSearch();
     const [loadData, setLoadData] = useState<boolean>(false);
     const {
         filter: { activeFilterYear, activeFilterGenre, activeFilterRating },
@@ -24,14 +23,13 @@ export const FilmsBlock = observer(() => {
     const [tryAgainLoading, setTryAgainLoading] = useState<boolean>(false);
 
     // сопоставление данных localstorage с глобальным состоянием
-    // if (localStorage && localStorage.getItem('favorites')) {
-    //     const obj = JSON.parse(localStorage.getItem('favorites')!);
-    //     mergeFavoritesItemsWithLoacalStorage.apply(favorite, [obj]);
-    // }
+    if (localStorage && localStorage.getItem('favorites')) {
+        const obj = JSON.parse(localStorage.getItem('favorites')!);
+        mergeFavoritesItemsWithLoacalStorage.apply(favorite, [obj]);
+    }
 
     // получение данных с API, добалениие в глобальное состояние
     useEffect(() => {
-        // console.log('use effect load data');
         getMoviesFromApi.apply(movies, [
             {
                 year: activeFilterYear,
@@ -67,7 +65,6 @@ export const FilmsBlock = observer(() => {
             );
         }
     }
-    // console.log('content - ', content);
 
     const handleScroll = useCallback((target: HTMLDivElement) => {
         if (target) {
@@ -79,18 +76,22 @@ export const FilmsBlock = observer(() => {
     }, []);
 
     useEffect(() => {
-        getMoviesFromApi.apply(movies, [
-            {
-                year: activeFilterYear,
-                genre: activeFilterGenre,
-                rating: activeFilterRating,
-            },
-        ]);
+        if (loadData) {
+            getMoviesFromApi.apply(movies, [
+                {
+                    year: activeFilterYear,
+                    genre: activeFilterGenre,
+                    rating: activeFilterRating,
+                },
+            ]);
+
+            setLoadData(false);
+        }
     }, [loadData]);
 
     return (
         <>
-            {process === 'loading' && !loadData ? (
+            {process === 'loading' && mvs.length === 0 ? (
                 <Spinner />
             ) : process === 'error' ? (
                 <Error
@@ -108,11 +109,11 @@ export const FilmsBlock = observer(() => {
                     >
                         {content}
                     </article>
-                    {/* {loadData ? (
+                    {loadData ? (
                         <div className="loadData">
                             <Spinner />
                         </div>
-                    ) : null} */}
+                    ) : null}
                 </>
             )}
         </>

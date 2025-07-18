@@ -1,5 +1,4 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-// import useGetDataFromMoviesSearch from '@/features/services/getFilms';
 import { getDataMoviesInfo } from '@/features/services/getData';
 import type { IDataTransform } from '@/shared/utilsShared/transformDataShared';
 import type {
@@ -12,12 +11,14 @@ class MoviesStore implements IMovieStore {
     offset: number;
     length: number;
     process: IMovieStore['process'];
+    searchByName: IMovieStore['searchByName'];
 
     constructor() {
         this.mvs = [];
         this.offset = 1;
         this.length = 0;
         this.process = 'idle';
+        this.searchByName = 'byAll';
         makeAutoObservable(this);
     }
 
@@ -37,15 +38,13 @@ class MoviesStore implements IMovieStore {
             };
             this.setLength();
         }
-
-        // console.log('mvs - ', this.mvs);
     }
 
+    // получение фильмов
     getMoviesFromApi = async ({ year, genre, rating }: ISearchParamsMovies) => {
-        // console.log(
-        //     'request data',
-        //     ` params: year: ${year} genre: ${genre} rating: ${rating}`
-        // );
+        if (this.searchByName === 'byName') {
+            return;
+        }
 
         this.setProcess('loading');
 
@@ -58,7 +57,6 @@ class MoviesStore implements IMovieStore {
             rating,
         })
             .then((mov) => {
-                console.log('update data', mov);
                 this.addInStateMovies(mov);
             })
             .then(() => {
@@ -71,6 +69,33 @@ class MoviesStore implements IMovieStore {
         runInAction(() => {
             this.setOffset();
         });
+    };
+
+    // установка флага загрузки фильмов по имени
+    setSearchByName(value: IMovieStore['searchByName']) {
+        this.searchByName = value;
+    }
+
+    // получение фильма по названию
+    getMovieByNameFromApi = async (value: string) => {
+        if (this.searchByName === 'byAll') {
+            return;
+        }
+
+        this.setProcess('loading');
+        const { getFilmByName } = getDataMoviesInfo();
+
+        await getFilmByName(value)
+            .then((mov) => {
+                console.log('update data', mov);
+                this.addInStateMovies(mov);
+            })
+            .then(() => {
+                this.setProcess('idle');
+            })
+            .catch(() => {
+                this.setProcess('error');
+            });
     };
 
     // счетчик длины массива фильмов
