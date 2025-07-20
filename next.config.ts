@@ -3,11 +3,12 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
     sassOptions: {
         additionalData: `
-            $text_active_color: #f80000;
+            $text_active_color: #ffffff;
             $text_color: #1f1919;
             $decor_color: #e1e3e1;
             $text_hover_color: #5555ff;
             $danger_color: #f80000;
+            $active_elem_color: #08a1d4;
         `,
     },
     images: {

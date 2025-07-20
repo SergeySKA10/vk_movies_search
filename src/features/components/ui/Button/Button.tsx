@@ -66,7 +66,7 @@ export const Button = ({
     switch (type) {
         case 'add':
             text = 'Добавить';
-            backgroundColor = '#2eab4f';
+            backgroundColor = '#08a1d4';
             break;
         case 'delete':
             text = 'Удалить';

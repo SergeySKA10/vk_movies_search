@@ -94,6 +94,28 @@ export const MovieFilter = observer(({ name, filters }: IMovieFiltersProps) => {
 
     // формирование фильтров
     const filtersList = filters.map((filter, i) => {
+        if (i === 0 || i === filters.length - 1) {
+            return (
+                <li
+                    tabIndex={0}
+                    key={i}
+                    className="selectFilm__item"
+                    data-id={name}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        setShowFilters(!showFilter);
+                        updateFilter(
+                            (e.target as HTMLElement).textContent!,
+                            (e.target as HTMLElement).getAttribute('data-id')!
+                        );
+                    }}
+                    onFocus={() => setShowFilters(!showFilter)}
+                >
+                    {filter}
+                </li>
+            );
+        }
+
         return (
             <li
                 tabIndex={0}

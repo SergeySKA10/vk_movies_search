@@ -3,11 +3,16 @@
     font-size: 18px;
     font-weight: 700;
     color: $text_color;
-    &:hover {
-        color: $text_hover_color;
+    padding: 12px;
+    border-radius: 25px;
+    @media (hover: hover) {
+        &:hover {
+            color: $text_hover_color;
+        }
     }
 }
 
 .activeLinkPage {
     color: $text_active_color !important;
+    background-color: $active_elem_color;
 }

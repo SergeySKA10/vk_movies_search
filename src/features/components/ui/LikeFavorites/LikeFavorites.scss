@@ -11,9 +11,12 @@
     border-top: none;
     transform: rotate(-45deg);
     cursor: pointer;
-    &:hover {
-        transform: rotate(-45deg) scale(1.2);
+    @media (hover: hover) {
+        &:hover {
+            transform: rotate(-45deg) scale(1.2);
+        }
     }
+
     &_before,
     &_after {
         content: '';

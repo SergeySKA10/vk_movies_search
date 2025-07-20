@@ -44,9 +44,12 @@
     top: 20px;
     right: 30px;
     cursor: pointer;
-    &:hover {
-        transform: scale(1.1);
+    @media (hover: hover) {
+        &:hover {
+            transform: scale(1.1);
+        }
     }
+
     &::after {
         content: '';
         position: relative;

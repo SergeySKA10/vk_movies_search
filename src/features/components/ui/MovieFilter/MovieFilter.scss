@@ -1,5 +1,5 @@
 .selectFilm {
-    transition: all 0.5s;
+    transition: all 0.3s;
     padding-bottom: 10px;
     display: flex;
     flex-direction: column;
@@ -10,9 +10,6 @@
     border-radius: 5px;
     overflow: hidden;
     cursor: pointer;
-    :hover {
-        color: $text_hover_color;
-    }
     &__filter {
         display: flex;
         align-items: center;
@@ -64,8 +61,11 @@
         font-size: 16px;
         font-weight: 400;
         color: $text_color;
-        &:hover {
-            background-color: $decor_color;
+        @media (hover: hover) {
+            &:hover {
+                background-color: $active_elem_color;
+                color: $text_active_color;
+            }
         }
     }
 }
