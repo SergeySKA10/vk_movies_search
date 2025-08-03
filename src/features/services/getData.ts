@@ -30,7 +30,7 @@ export const getDataMoviesInfo: GetData = () => {
                 );
             }
             const result = await response.json();
-            return result.docs.map((el: any) => transformDataMovies(el));
+            return result.docs.map((el: unknown) => transformDataMovies(el));
         } catch (error) {
             if (error instanceof Error) {
                 throw new Error(`error message: ${error.message}`);
@@ -79,7 +79,7 @@ export const getDataMoviesInfo: GetData = () => {
 
             const result = await response.json();
             console.log(result);
-            return result.docs.map((el: any) => transformDataMovies(el));
+            return result.docs.map((el: unknown) => transformDataMovies(el));
         } catch (e: unknown) {
             if (e instanceof Error) {
                 throw new Error(
