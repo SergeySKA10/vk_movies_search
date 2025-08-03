@@ -49,7 +49,8 @@ class FavoriteStore implements IFavoriteStore {
 
     // добавление фильма в состояние избранных
     addMovieInFavorites() {
-        this.favoritesItems[this.movie.id] = this.movie;
+        this.favoritesItems[this.movie.id as string] = this
+            .movie as ICardMovieProps;
     }
 
     // удаление фильма из состояние избранных

@@ -1,6 +1,7 @@
 import type { IDataTransform } from '@/shared/utilsShared/transformDataShared';
 
 // функция для преобразования данных в объекты с нужными значениями
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const transformDataMovies = (data: any): IDataTransform => {
     return {
         id: data.id,
