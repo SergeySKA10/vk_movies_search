@@ -8,7 +8,7 @@ import type {
 
 export const getDataMoviesInfo: GetData = () => {
     const _apiBaseURL = `https://api.kinopoisk.dev/v1.4/movie`;
-    const _apiKey = 'XE47S2T-1C3MT41-KFM0CM7-5GZMXEN';
+    const _apiKey = '';
     const _apiSearchByNameMovie = `${_apiBaseURL}/search?page=1&limit=10&query=`;
 
     const getAllFilms: GetAllFilms = async ({ page, year, rating, genre }) => {
