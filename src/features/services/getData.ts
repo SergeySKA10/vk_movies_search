@@ -1,17 +1,22 @@
 import { transformDataMovies } from '../utils/transformData';
+import { fetchApiKey } from './getApiKey';
 import type {
     GetData,
     GetAllFilms,
     GetOneMovie,
     GetFilmByName,
 } from '@/shared/servicesShared/getFilmsShared';
+let _apiKey = '';
 
 export const getDataMoviesInfo: GetData = () => {
     const _apiBaseURL = `https://api.kinopoisk.dev/v1.4/movie`;
-    const _apiKey = '';
     const _apiSearchByNameMovie = `${_apiBaseURL}/search?page=1&limit=10&query=`;
 
     const getAllFilms: GetAllFilms = async ({ page, year, rating, genre }) => {
+        if (!_apiKey) {
+            _apiKey = await fetchApiKey();
+        }
+
         const filterYears = year ? `&year=${year}` : '';
         const filterRating = rating ? `&rating.imdb=${rating}` : '';
         const filterGenre = genre ? `&genres.name=${genre}` : '';
@@ -41,6 +46,10 @@ export const getDataMoviesInfo: GetData = () => {
     };
 
     const getMovie: GetOneMovie = async (id: string) => {
+        if (!_apiKey) {
+            _apiKey = await fetchApiKey();
+        }
+
         const url = `${_apiBaseURL}/${id}`;
         try {
             const response = await fetch(url, {
@@ -69,6 +78,10 @@ export const getDataMoviesInfo: GetData = () => {
     };
 
     const getFilmByName: GetFilmByName = async (value: string) => {
+        if (!_apiKey) {
+            _apiKey = await fetchApiKey();
+        }
+
         const url = `${_apiSearchByNameMovie}${value}`;
         try {
             const response = await fetch(url, {
@@ -78,7 +91,6 @@ export const getDataMoviesInfo: GetData = () => {
             });
 
             const result = await response.json();
-            console.log(result);
             return result.docs.map((el: unknown) => transformDataMovies(el));
         } catch (e: unknown) {
             if (e instanceof Error) {

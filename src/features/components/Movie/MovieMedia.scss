@@ -1,3 +1,21 @@
+@media (max-width: 1700px) {
+    .movie__info {
+        width: 1200px;
+    }
+}
+
+@media (max-width: 1500px) {
+    .movie__info {
+        width: 992px;
+    }
+}
+
+@media (max-width: 1300px) {
+    .movie__info {
+        width: 600px;
+    }
+}
+
 @media (max-width: 1200px) {
     .movie__poster {
         width: 280px;
@@ -28,7 +46,17 @@
         gap: 20px;
         min-height: 200px;
     }
+    .movie__info {
+        width: 400px;
+        margin: 0 auto;
+    }
     .movie__poster {
         margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .movie__info {
+        width: 300px;
     }
 }

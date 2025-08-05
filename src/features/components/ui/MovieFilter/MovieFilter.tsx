@@ -102,6 +102,7 @@ export const MovieFilter = observer(({ name, filters }: IMovieFiltersProps) => {
                     className="selectFilm__item"
                     data-id={name}
                     onClick={(e) => {
+                        e.preventDefault();
                         e.stopPropagation();
                         setShowFilters(!showFilter);
                         updateFilter(
@@ -136,30 +137,30 @@ export const MovieFilter = observer(({ name, filters }: IMovieFiltersProps) => {
         );
     });
 
-    let filterName: string;
+    const [filterName, setFilterName] = useState<string>('');
 
-    // формирование названия блока фильтров
-    if (name === 'year') {
-        if (activeFilterYear) {
-            filterName = activeFilterYear;
-        } else {
-            filterName = 'Году';
+    useEffect(() => {
+        // формирование названия блока фильтров
+        if (name === 'year') {
+            if (activeFilterYear) {
+                setFilterName(activeFilterYear);
+            } else {
+                setFilterName('Году');
+            }
+        } else if (name === 'genre') {
+            if (activeFilterGenre) {
+                setFilterName(activeFilterGenre);
+            } else {
+                setFilterName('Жанру');
+            }
+        } else if (name === 'rating') {
+            if (activeFilterRating) {
+                setFilterName(activeFilterRating);
+            } else {
+                setFilterName('Рейтингу');
+            }
         }
-    } else if (name === 'genre') {
-        if (activeFilterGenre) {
-            filterName = activeFilterGenre;
-        } else {
-            filterName = 'Жанру';
-        }
-    } else if (name === 'rating') {
-        if (activeFilterRating) {
-            filterName = activeFilterRating;
-        } else {
-            filterName = 'Рейтингу';
-        }
-    } else {
-        filterName = 'Not found filter';
-    }
+    }, [name]);
 
     return (
         <div

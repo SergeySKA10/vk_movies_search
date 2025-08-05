@@ -1,6 +1,6 @@
 'use client';
 
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import type { IFilterStore } from '@/shared/storeShared/filterStoreShared';
 
 class FilterStore implements IFilterStore {
@@ -53,15 +53,21 @@ class FilterStore implements IFilterStore {
 
     // функции установки фильров
     setActiveFilterYear(value: string) {
-        this.activeFilterYear = value;
+        runInAction(() => {
+            this.activeFilterYear = value;
+        });
     }
 
     setActiveFilterGenre(value: string) {
-        this.activeFilterGenre = value;
+        runInAction(() => {
+            this.activeFilterGenre = value;
+        });
     }
 
     setActiveFilterRating(value: string) {
-        this.activeFilterRating = value;
+        runInAction(() => {
+            this.activeFilterRating = value;
+        });
     }
 }
 

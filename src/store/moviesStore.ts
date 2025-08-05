@@ -63,7 +63,7 @@ class MoviesStore implements IMovieStore {
                 this.setProcess('idle');
             })
             .catch(() => {
-                this.setProcess('loading');
+                this.setProcess('error');
                 throw new Error('Ошибка при запросе данных');
             });
 
